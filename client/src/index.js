@@ -1,5 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import WrappedLoginForm from './components/login/login'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<WrappedLoginForm />, document.getElementById('root'));
