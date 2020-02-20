@@ -1,0 +1,27 @@
+{
+  "name": "wcsutwitter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ajetski/WCSUtwitter.git"
+  },
+  "author": "Sarah Cizmazia, Ty Doris, Caleb Garrick, Adam Jeniski, Shayon Maramkhah",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Ajetski/WCSUtwitter/issues"
+  },
+  "homepage": "https://github.com/Ajetski/WCSUtwitter#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg-promise": "^10.4.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
