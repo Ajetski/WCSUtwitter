@@ -1,7 +1,6 @@
 import React from 'react';
-import 'antd/dist/antd.css';
-import './login.css';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import './login.less';
+import { Form, Icon, Input, Button } from 'antd';
 
 class LoginForm extends React.Component {
   handleSubmit = e => {
@@ -19,7 +18,7 @@ class LoginForm extends React.Component {
       <Form onSubmit={this.handleSubmit} className="login-form">
         <div className="login-form-icon">
         <Icon type="twitter" style={{ fontSize: '50px', color: '#08c' }} />
-        <p className="login-form-p">Log in to Twitter</p>
+        <p className="login-form-p">Log in to WCSUTwitter</p>
         </div>
         <Form.Item>
           {getFieldDecorator('username', {
@@ -46,8 +45,8 @@ class LoginForm extends React.Component {
           <Button type="primary" shape="round" htmlType="submit" className="login-form-button">
             Log in
           </Button>
-          <a href="/forgot.html">Forgot password? </a>
-          <a href="/register.html"> Sign up for Twitter!</a>
+          <a href="/forgot.html">Forgot password?</a>
+          <a href="/register.html" style={{ float: 'right' }}> Sign up for WCSUTwitter!</a>
         </Form.Item>
       </Form>
     );
