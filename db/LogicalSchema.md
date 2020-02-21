@@ -1,6 +1,6 @@
 ## Logical Schema
 
-**User** (<ins>ID*</ins>, Username*, Email*, HashedPassword*, privacySetting, notificationSetting)
+**User** (<u>Username*</u>, Email*, HashedPassword*, privacySetting, notificationSetting)
 
 **TrustedDevices** (<ins>UserID*</ins>, <ins>authToken*</ins>)
 
