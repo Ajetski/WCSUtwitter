@@ -7,7 +7,7 @@
 |Table|User|
 |:---|:-|
 |ER Origin|Entity|
-|Primary Key||
+|Primary Key|ID|
 |Foreign Key||
 |Uniqueness Constraint||
 
@@ -16,12 +16,13 @@
 
 |Name|Type|Range|Req/Opt|
 |:--|:--|:---|:-----|
-|ID||||
-|Username||||
-|Email||||
-|HashedPassword||||
-|PrivacySetting||||
-|NotificationSetting||||
+|ID|serial||Req|
+|Username|varchar||Req|
+|Email|varchar||Req|
+|HashedPassword|char||Req|
+|ProfPic|ByteA||Opt|
+|PrivacySetting|varchar||Opt|
+|NotificationSetting|varchar||Opt|
 
 
 
@@ -32,8 +33,8 @@
 |Table|TrustedDevice|
 |:---|:--|
 |ER Origin|Entity|
-|Primary Key||
-|Foreign Key||
+|Primary Key|UserID, authToken|
+|Foreign Key|UserID|
 |Uniqueness Constraint||
 
 
@@ -41,8 +42,8 @@
 
 |Name|Type|Range|Req/Opt|
 |:--|:--|:---|:-----|
-|UserID||||
-|authToken||||
+|UserID|serial||Req|
+|authToken|varchar||Req|
 
 
 
@@ -53,8 +54,8 @@
 |Table|CurrentSession|
 |:---|:--|
 |ER Origin|Entity|
-|Primary Key||
-|Foreign Key||
+|Primary Key|UserID, sessionID|
+|Foreign Key|UserID|
 |Uniqueness Constraint||
 
 
@@ -62,8 +63,8 @@
 
 |Name|Type|Range|Req/Opt|
 |:--|:--|:---|:-----|
-|UserID||||
-|sessionID||||
+|UserID|serial||Req|
+|sessionID|varchar||Req|
 
 
 
@@ -74,8 +75,8 @@
 |Table|Post|
 |:---|:--|
 |ER Origin|Entity|
-|Primary Key||
-|Foreign Key||
+|Primary Key|ID|
+|Foreign Key|PosterID, OriginID|
 |Uniqueness Constraint||
 
 
@@ -83,15 +84,13 @@
 
 |Name|Type|Range|Req/Opt|
 |:--|:--|:---|:-----|
-|ID||||
-|PosterID||||
-|OriginID||||
-|Image||||
-|Video||||
-|Text||||
-|Timestamp||||
-|Longitude||||
-|Latitude||||
+|ID|serial||Req|
+|PosterID|serial||Req|
+|OriginID|serial||Req|
+|Media|ByteA||Opt|
+|Text|Varchar||Req|
+|Timestamp|Timestamp||Req|
+|Location|Point||Opt|
 
 
 
@@ -102,8 +101,8 @@
 |Table|Reply|
 |:---|:--|
 |ER Origin|Entity|
-|Primary Key||
-|Foreign Key||
+|Primary Key|ID|
+|Foreign Key|SenderID, OriginID, ReplyID|
 |Uniqueness Constraint||
 
 
@@ -111,12 +110,12 @@
 
 |Name|Type|Range|Req/Opt|
 |:--|:--|:---|:-----|
-|ID||||
-|SenderID||||
-|OriginID||||
-|ReplyID||||
-|Text||||
-|Timestamp||||
+|ID|serial||Req|
+|SenderID|serial||Req|
+|OriginID|serial||Req|
+|ReplyID|serial||Req|
+|Text|varchar||Req|
+|Timestamp|Timestamp||Req|
 
 
 
@@ -127,8 +126,8 @@
 |Table|Follow|
 |:---|:--|
 |ER Origin|Entity|
-|Primary Key||
-|Foreign Key||
+|Primary Key|Follower, FollowedUser|
+|Foreign Key|Follower, FollowedUser|
 |Uniqueness Constraint||
 
 
@@ -136,8 +135,8 @@
 
 |Name|Type|Range|Req/Opt|
 |:--|:--|:---|:-----|
-|Follower||||
-|FollowedUser||||
+|Follower|serial||Req|
+|FollowedUser|serial||Req|
 
 
 
@@ -149,8 +148,8 @@
 |Table|Block|
 |:---|:--|
 |ER Origin|Entity|
-|Primary Key||
-|Foreign Key||
+|Primary Key|Blocker, BlockedUser|
+|Foreign Key|Blocker, BlockedUser|
 |Uniqueness Constraint||
 
 
@@ -158,7 +157,7 @@
 
 |Name|Type|Range|Req/Opt|
 |:--|:--|:---|:-----|
-|Blocker||||
-|BlockedUser||||
+|Blocker|serial||Req|
+|BlockedUser|serial||Req|
 
 
