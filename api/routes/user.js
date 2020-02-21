@@ -1,21 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const dbConnectionCreator = require("../db/db.js");
-
-//this will be replaced with obtaining values for a secret file or enviornment variable
-const host = ('127.0.0.1').trim();
-const port = ('32776').trim(); 
-const database = ('testingdb').trim();
-const username = ('superuser').trim();
-const password = ('password').trim();
-
-const db = dbConnectionCreator({
-	username,
-	password,
-	host,
-	port,
-	database
-});
+const db = require("../db/db.js");
 
 // Create a new user
 router.post("/", (req, res) => {
@@ -32,7 +17,10 @@ router.post("/", (req, res) => {
 	 */
 
 	db.any(
-		`INSERT INTO users (id, username, firstname, lastname, email, hashedpassword, profpic, privacysetting, notificationsetting) VALUES
+		`INSERT INTO users (
+			id, username, firstname, lastname, email,
+			hashedpassword, profpic, privacysetting, notificationsetting
+		) VALUES
 		(
 			DEFAULT, '${req.body.username}',
 			'${req.body.firstname}',
@@ -44,23 +32,30 @@ router.post("/", (req, res) => {
 			${req.body.profpic ? `'${req.body.notificationsetting}'` : "NULL"}
 		);`
 	).then((p) => {
-		return res.send(`User '${req.body.username}' has been created.`)
+		return res.status(200).send({
+			response: `User '${req.body.username}' has been created.`
+		});
 	}).catch((error) => {
-		return res.status(500).send(error)
+		return res.status(500).send({
+			error: `User '${req.body.username}' could not be created.`,
+			postgres_response: error
+		});
 	});
 });
 
 // Get a user's profile data
 router.get("/:username", (req, res) => {
-	console.log(`'${req.params.username}'`)
     db.any(
 		`SELECT username, firstname, lastname, email
 		FROM users
 		WHERE username = '${req.params.username}';`
 	).then((p) => {
+		if (p.length < 1) {
+			throw new Error(`User '${req.params.username}' could not be found.`);
+		}
 		return res.send(p);
 	}).catch((error) => {
-		return res.status(500).send(error);
+		return res.status(404).send({"error": `${error}`});
 	});
 });
 
@@ -83,19 +78,19 @@ router.patch("/:username", (req, res) => {
 
 // Delete a user
 router.delete("/:username", (req, res) => {
-	console.log(`'${req.params.username}'`)
     db.any(
 		`DELETE FROM users
 		WHERE username = '${req.params.username}';`
 	).then((p) => {
-		return res.send(`User '${req.body.username}' has been deleted.`)
+		return res.send({
+			response: `User '${req.params.username}' has been deleted.`
+		})
 	}).catch((error) => {
-		return res.status(500).send(error);
+		return res.status(500).send({
+			error: `User '${req.params.username}' could not be created.`,
+			postgres_response: error
+		});
 	});
-});
-
-process.on('exit', () => {
-    db.$pool.end();
 });
 
 module.exports = router;
