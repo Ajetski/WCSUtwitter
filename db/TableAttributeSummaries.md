@@ -7,16 +7,15 @@
 |Table|User|
 |:---|:-|
 |ER Origin|Entity|
-|Primary Key|ID|
+|Primary Key|USERNAME|
 |Foreign Key||
-|Uniqueness Constraint||
+|Uniqueness Constraint|USERNAME, EMAIL|
 
 
 ###### Attribute Summary
 
 |Name|Type|Range|Req/Opt|
 |:--|:--|:---|:-----|
-|ID|serial||Req|
 |Username|varchar||Req|
 |Email|varchar||Req|
 |HashedPassword|char||Req|
@@ -86,7 +85,7 @@
 |:--|:--|:---|:-----|
 |ID|serial||Req|
 |PosterID|serial||Req|
-|OriginID|serial||Req|
+|OriginID|serial||Opt|
 |Media|ByteA||Opt|
 |Text|Varchar||Req|
 |Timestamp|Timestamp||Req|
@@ -113,7 +112,7 @@
 |ID|serial||Req|
 |SenderID|serial||Req|
 |OriginID|serial||Req|
-|ReplyID|serial||Req|
+|ReplyID|serial||Opt|
 |Text|varchar||Req|
 |Timestamp|Timestamp||Req|
 
