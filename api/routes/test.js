@@ -3,9 +3,14 @@ const router = express.Router();
 const db = require("../db/db.js");
 
 // Default route
-router.post("/", (req, res) => {
-	console.log(req.body);
-	res.send(`username is ${req.body.username}`);
+
+const multer = require('multer')
+
+const upload = multer()
+
+router.post("/", upload.single('pic'), (req, res) => {
+	console.log(req.file.buffer);
+	res.send(`username is ${req.body.picture}`);
 });
 
 router.get("/select", (req, res) => {
