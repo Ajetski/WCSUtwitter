@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import Login from './pages/login/login'
 import Home from './pages/home/home'
+import Signup from './pages/signup/signup'
 import NotFound from './pages/notfound/notfound'
 
 export default class App extends Component{
@@ -13,6 +14,7 @@ export default class App extends Component{
         <Switch>
           <Route path='/login' component={Login}></Route>
           <Route path='/home' component={Home}></Route>
+          <Route path='/signup' component={Signup}></Route>
           <Route exact path='/' component={Home}></Route>
           <Route path='*' component={NotFound}></Route>
         </Switch>

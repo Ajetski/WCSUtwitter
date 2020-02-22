@@ -45,8 +45,8 @@ class LoginForm extends React.Component {
           <Button type="primary" shape="round" htmlType="submit" className="login-form-button">
             Log in
           </Button>
-          <a href="/forgot.html">Forgot password?</a>
-          <a href="/register.html" style={{ float: 'right' }}> Sign up for WCSUTwitter!</a>
+          <a href="/forgot">Forgot password?</a>
+          <a href="/signup" style={{ float: 'right' }}> Sign up for WCSUTwitter!</a>
         </Form.Item>
       </Form>
     );
