@@ -6,9 +6,29 @@ import {
   Tooltip,
   Icon,
   Checkbox,
-  Button
+  Button,
+  message,
+  Modal
 } from 'antd';
+import bcrypt from 'bcryptjs';
 
+import {reqSingup} from '../../axios/index'
+import memoryUtils from '../../utils/memoryUtils'
+import storageUtils from '../../utils/storageUtils'
+
+const saltRounds = 10;
+
+function readAgreementInfo() {
+  Modal.info({
+    title: 'Agreement',
+    content: (
+      <div>
+        <p>Nothing, but Thank you for your registration</p>
+      </div>
+    ),
+    onOk() {},
+  });
+}
 
 class RegistrationForm extends React.Component {
   state = {
@@ -16,10 +36,26 @@ class RegistrationForm extends React.Component {
   };
 
   handleSubmit = e => {
-    e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
+    e.preventDefault()
+    this.props.form.validateFields(async (err, user) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        user.password = await bcrypt.hash(user.password, saltRounds)
+        delete user.confirm
+        console.log(user)
+        const result = await reqSingup(user)
+        if (result.status===0) {
+          message.success('Registration is successful!')
+
+          const user = result.data
+          memoryUtils.user = user
+          storageUtils.saveUser(user)
+
+          this.props.history.replace('/home')
+        } else {
+          message.error(result.msg)
+        }
+      } else {
+        console.log('error: '+ err.message)
       }
     });
   };
@@ -44,6 +80,32 @@ class RegistrationForm extends React.Component {
       form.validateFields(['confirm'], { force: true });
     }
     callback();
+  };
+
+  validateUsername = (rule, value, callback) => {
+    if(!value) {
+      callback('Please input your username!')
+    } else if (value.length<4) {
+      callback('User name must be at least 4 characters!')
+    } else if (value.length>12) {
+      callback('User name cannot be longer than 12 characters!')
+    } else if (!/^[a-zA-Z0-9_]+$/.test(value)) {
+      callback('User name must be letters, numbers, or underscores!')
+    } else {
+      callback()
+    }
+  }
+
+  validatePassword = (rule, value, callback) => {
+    if(!value) {
+      callback('Please input your password!')
+    } else if (value.length<6) {
+      callback('Password must be at least 6 characters!')
+    } else if (value.length>24) {
+      callback('Password cannot be longer than 24 characters!')
+    } else {
+      callback()
+    }
   };
 
   render() {
@@ -90,8 +152,7 @@ class RegistrationForm extends React.Component {
           {getFieldDecorator('username', {
             rules: [
               {
-                required: true,
-                message: 'Please input your username!',
+                validator: this.validateUsername
               },
             ],
           })(<Input />)}
@@ -100,8 +161,7 @@ class RegistrationForm extends React.Component {
           {getFieldDecorator('password', {
             rules: [
               {
-                required: true,
-                message: 'Please input your password!',
+                validator: this.validatePassword
               },
               {
                 validator: this.validateToNextPassword,
@@ -113,8 +173,7 @@ class RegistrationForm extends React.Component {
           {getFieldDecorator('confirm', {
             rules: [
               {
-                required: true,
-                message: 'Please confirm your password!',
+                validator: this.validatePassword
               },
               {
                 validator: this.compareToFirstPassword,
@@ -150,10 +209,10 @@ class RegistrationForm extends React.Component {
 
         <Form.Item {...tailFormItemLayout}>
           {getFieldDecorator('agreement', {
-            valuePropName: 'checked',
+            valuePropName: 'true',
           })(
-            <Checkbox>
-              I have read the <a href="/home">agreement</a>
+            <Checkbox defaultChecked={true}>
+              <Button type="link" onClick={readAgreementInfo}>I have read the agreement</Button>
             </Checkbox>,
           )}
         </Form.Item>
