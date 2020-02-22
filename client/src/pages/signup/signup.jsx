@@ -41,7 +41,6 @@ class RegistrationForm extends React.Component {
       if (!err) {
         user.password = await bcrypt.hash(user.password, saltRounds)
         delete user.confirm
-        console.log(user)
         const result = await reqSingup(user)
         if (result.status===0) {
           message.success('Registration is successful!')

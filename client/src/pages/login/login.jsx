@@ -1,13 +1,35 @@
 import React from 'react';
 import './login.less';
-import { Form, Icon, Input, Button } from 'antd';
+import { Form, Icon, Input, Button, message } from 'antd';
+import bcrypt from 'bcryptjs';
 
+import { reqLogin } from '../../axios/index'
+import memoryUtils from '../../utils/memoryUtils'
+import storageUtils from '../../utils/storageUtils'
+
+const saltRounds = 10;
 class LoginForm extends React.Component {
   handleSubmit = e => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    e.preventDefault()
+
+    this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        values.password = await bcrypt.hash(values.password, saltRounds)
+        const {username, password} = values
+        const result = await reqLogin(username, password)
+        if (result.status===0) {
+          message.success('login successful!')
+
+          const user = result.data
+          memoryUtils.user = user
+          storageUtils.saveUser(user)
+
+          this.props.history.replace('/home')
+        } else {
+          message.error(result.msg)
+        }
+      } else {
+        console.log('error: '+ err.message)
       }
     });
   };
