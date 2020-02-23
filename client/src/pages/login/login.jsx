@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom'
 import './login.less';
 import { Form, Icon, Input, Button, message } from 'antd';
 import bcrypt from 'bcryptjs';
@@ -35,6 +36,11 @@ class LoginForm extends React.Component {
   };
 
   render() {
+    const user = memoryUtils.user
+    if(user && user.username) {
+      return <Redirect to='/home'/>
+    }
+    
     const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
