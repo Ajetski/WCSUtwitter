@@ -1,0 +1,351 @@
+{
+	"info": {
+		"_postman_id": "811772c5-5690-49c0-8796-f25775248ec7",
+		"name": "WCSUtwitter",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Test",
+			"item": [
+				{
+					"name": "test",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"Ajet\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/test",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"test"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/user/Ajet2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"Ajet2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Profile Pic",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/user/Ajet2/pic",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"Ajet2",
+								"pic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "Ajet",
+									"type": "text"
+								},
+								{
+									"key": "firstname",
+									"value": "Adam",
+									"type": "text"
+								},
+								{
+									"key": "lastname",
+									"value": "Jeniski",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "jeniski001@wcsu.edu",
+									"type": "text"
+								},
+								{
+									"key": "hashedpassword",
+									"value": "abcdefg",
+									"type": "text"
+								},
+								{
+									"key": "profpic",
+									"type": "file",
+									"src": "/C:/Users/Ajet/Pictures/Capture.PNG"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit User",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "Ajet3",
+									"type": "text"
+								},
+								{
+									"key": "firstname",
+									"value": "Adam1",
+									"type": "text"
+								},
+								{
+									"key": "lastname",
+									"value": "Jeniski2",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "jeniski001@wcsu.edu",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "hashedpassword",
+									"value": "abcdefg",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "profpic",
+									"type": "file",
+									"src": "/C:/Users/Ajet/Pictures/Capture.PNG",
+									"disabled": true
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/Ajet",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"Ajet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/user/Ajet",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"Ajet"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "Ajet",
+									"type": "text"
+								},
+								{
+									"key": "firstname",
+									"value": "Adam",
+									"type": "text"
+								},
+								{
+									"key": "lastname",
+									"value": "Jeniski",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "jeniski001@wcsu.edu",
+									"type": "text"
+								},
+								{
+									"key": "hashedpassword",
+									"value": "abcdefg",
+									"type": "text"
+								},
+								{
+									"key": "profpic",
+									"type": "file",
+									"src": "/C:/Users/Ajet/Pictures/Capture.PNG"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "b7d7980d-cd3f-488b-af77-e38a27653c1e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "2684426a-8554-432a-8f5b-2d31b58d100b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "0988f883-0dd3-4f9f-9a6f-3f97559235ab",
+			"key": "url",
+			"value": "localhost:8080",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
