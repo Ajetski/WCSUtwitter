@@ -36,24 +36,11 @@ router.get("/:username/pic", (req, res) => {
 		.then(query_result => {
 			if (query_result.profpic) {
 				res.sendFile(
-					path.join(
-						__dirname,
-						"..",
-						"uploaded_media",
-						"user_profile_pics"
-					) +
-						"/" +
-						req.params.username +
-						".png"
+					path.resolve(__dirname, "..", "uploaded_media", "user_profile_pics_large", `${req.params.username}.png`)
 				);
 			} else {
 				res.sendFile(
-					path.join(
-						__dirname,
-						"..",
-						"uploaded_media",
-						"default_profile_pic"
-					) + "/default.png"
+					path.resolve(__dirname, "..", "uploaded_media", "default_profile_pic", "default.png")
 				);
 			}
 		})
@@ -70,17 +57,28 @@ router.post("/", imageUpload.single("profpic"), async (req, res) => {
 	
 	//if an image has been uploaded, resize and save image
 	if (image) {
+
+		try{
+			await fs.unlink(path.resolve("uploaded_media", "user_profile_pics_large", req.params.username) + '.png', err => {});
+			await fs.unlink(path.resolve("uploaded_media", "user_profile_pics_medium", req.params.username) + '.png', err => {});
+			await fs.unlink(path.resolve("uploaded_media", "user_profile_pics_small", req.params.username) + '.png', err => {});
+		} catch (err) {}
+
 		try {
+			//resize and save large image
+			await sharp(req.file.path)
+				.resize({ width: 500, height: 500 })
+				.png()
+				.toFile(
+					path.resolve(req.file.destination, "user_profile_pics_large", image)
+				);
+
 			//resize and save medium image
 			await sharp(req.file.path)
 				.resize({ width: 250, height: 250 })
 				.png()
 				.toFile(
-					path.resolve(
-						req.file.destination,
-						"user_profile_pics",
-						image
-					)
+					path.resolve(req.file.destination, "user_profile_pics_medium", image)
 				);
 			
 			//resize and save small image
@@ -88,15 +86,10 @@ router.post("/", imageUpload.single("profpic"), async (req, res) => {
 				.resize({ width: 50, height: 50 })
 				.png()
 				.toFile(
-					path.resolve(
-						req.file.destination,
-						"user_profile_pics",
-						image.substr(0, image.length - 4) + "_small.png"
-					)
+					path.resolve(req.file.destination, "user_profile_pics_small", image)
 				);
 
 			await fs.unlink(req.file.path, err => {
-				if (err) throw err;
 			});
 		} catch (error) {
 			//if image resizeing and saving fails, handle error
@@ -146,17 +139,28 @@ router.patch("/:username", imageUpload.single("profpic"), async (req, res) => {
 	
 	//if an image has been uploaded, resize and save image
 	if (image) {
+
+		try{
+			await fs.unlink(path.resolve("uploaded_media", "user_profile_pics_large", req.params.username) + '.png', err => {});
+			await fs.unlink(path.resolve("uploaded_media", "user_profile_pics_medium", req.params.username) + '.png', err => {});
+			await fs.unlink(path.resolve("uploaded_media", "user_profile_pics_small", req.params.username) + '.png', err => {});
+		} catch (err) {}
+
 		try {
+			//resize and save large image
+			await sharp(req.file.path)
+				.resize({ width: 500, height: 500 })
+				.png()
+				.toFile(
+					path.resolve(req.file.destination, "user_profile_pics_large", image)
+				);
+
 			//resize and save medium image
 			await sharp(req.file.path)
 				.resize({ width: 250, height: 250 })
 				.png()
 				.toFile(
-					path.resolve(
-						req.file.destination,
-						"user_profile_pics",
-						image
-					)
+					path.resolve(req.file.destination, "user_profile_pics_medium", image)
 				);
 			
 			//resize and save small image
@@ -164,15 +168,10 @@ router.patch("/:username", imageUpload.single("profpic"), async (req, res) => {
 				.resize({ width: 50, height: 50 })
 				.png()
 				.toFile(
-					path.resolve(
-						req.file.destination,
-						"user_profile_pics",
-						image.substr(0, image.length - 4) + "_small.png"
-					)
+					path.resolve(req.file.destination, "user_profile_pics_small", image)
 				);
 
 			await fs.unlink(req.file.path, err => {
-				if (err) throw err;
 			});
 		} catch (error) {
 			//if image resizeing and saving fails, handle error
@@ -217,10 +216,9 @@ router.patch("/:username", imageUpload.single("profpic"), async (req, res) => {
 
 // Delete a user
 router.delete("/:username", async (req, res) => {
-
-	previous_path_base = path.resolve("uploaded_media", "user_profile_pics", req.params.username)
-	await fs.unlink(previous_path_base + '.png', err => {});
-	await fs.unlink(previous_path_base + '_small.png', err => {});
+	await fs.unlink(path.resolve("uploaded_media", "user_profile_pics_large", req.params.username) + '.png', err => {});
+	await fs.unlink(path.resolve("uploaded_media", "user_profile_pics_medium", req.params.username) + '.png', err => {});
+	await fs.unlink(path.resolve("uploaded_media", "user_profile_pics_small", req.params.username) + '.png', err => {});
 
 	db.any(
 		`DELETE FROM users
@@ -233,7 +231,7 @@ router.delete("/:username", async (req, res) => {
 		})
 		.catch(error => {
 			return res.status(500).send({
-				error: `User '${req.params.username}' could not be created.`,
+				error: `User '${req.params.username}' could not be deleted.`,
 				postgres_response: error
 			});
 		});
