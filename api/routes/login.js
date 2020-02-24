@@ -1,21 +1,27 @@
+//my modules
+const db = require("../db/db.js");
+
+//npm modules
 const express = require("express");
 const router = express.Router();
-const db = require("../db/db.js");
 
 
 // Get a user's profile data
-router.post("/login", (req, res) => {
-    db.any(
+router.post("/", (req, res) => {
+    db.one(
 		`SELECT username, firstname, lastname, email
 		FROM users
-		WHERE username = '${req.params.username}';`
+		WHERE username = '${req.body.username}' AND hashedpassword = '${req.body.hashedpassword}';`
 	).then((p) => {
-		if (p.length < 1) {
-			throw new Error(`User '${req.params.username}' could not be found.`);
-		}
-		return res.send(p[0]);
+		return res.send({
+			response: `Login attempt for user '${req.body.username}' was a success.`,
+			jwt: "1234567890" //fake jwt, need to implement real jwt
+		});
 	}).catch((error) => {
-		return res.status(404).send({"error": `${error.message}`});
+		return res.status(404).send({
+			response: `Login attempt for user '${req.body.username}' has failed.`,
+			error: error.message
+		});
 	});
 });
 
