@@ -125,8 +125,8 @@ router.post("/", imageUpload.single("profpic"), async (req, res) => {
 	}).catch(error => {
 		//on failure of query
 		return res.status(500).send({
-			error: `User '${req.body.username}' could not be created.`,
-			postgres_response: error
+			response: `User '${req.body.username}' could not be created.`,
+			error: error
 		});
 	});
 });
@@ -208,8 +208,8 @@ router.patch("/:username", imageUpload.single("profpic"), async (req, res) => {
 		.catch(error => {
 			//on failure of query
 			return res.status(500).send({
-				error: `Could not update user ${req.params.username}.`,
-				response: error
+				response: `Could not update user ${req.params.username}.`,
+				error: error
 			});
 		});
 });
@@ -231,8 +231,8 @@ router.delete("/:username", async (req, res) => {
 		})
 		.catch(error => {
 			return res.status(500).send({
-				error: `User '${req.params.username}' could not be deleted.`,
-				postgres_response: error
+				response: `User '${req.params.username}' could not be deleted.`,
+				error: error
 			});
 		});
 });
