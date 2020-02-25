@@ -5,12 +5,16 @@ const db = require("../db/db.js");
 // Default route
 
 const multer = require('multer')
+const upload = multer({
+	
+})
 
-const upload = multer()
-
-router.post("/", upload.single('pic'), (req, res) => {
+router.post("/", upload.single('picture'), (req, res) => {
 	console.log(req.file.buffer);
-	res.send(`username is ${req.body.picture}`);
+	console.log(req.file)
+	res.send({
+		body: req.body
+	});
 });
 
 router.get("/select", (req, res) => {
