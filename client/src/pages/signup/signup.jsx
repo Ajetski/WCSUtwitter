@@ -39,7 +39,7 @@ class RegistrationForm extends React.Component {
     e.preventDefault()
     this.props.form.validateFields(async (err, user) => {
       if (!err) {
-        user.password = await bcrypt.hash(user.password, saltRounds)
+        user.hashedpassword = await bcrypt.hash(user.hashedpassword, saltRounds)
         delete user.confirm
         const result = await reqSingup(user)
         if (result.status===0) {
@@ -66,7 +66,7 @@ class RegistrationForm extends React.Component {
 
   compareToFirstPassword = (rule, value, callback) => {
     const { form } = this.props;
-    if (value && value !== form.getFieldValue('password')) {
+    if (value && value !== form.getFieldValue('hashedpassword')) {
       callback('Two passwords that you enter is inconsistent!');
     } else {
       callback();
@@ -157,7 +157,7 @@ class RegistrationForm extends React.Component {
           })(<Input />)}
         </Form.Item>
         <Form.Item label="Password" hasFeedback>
-          {getFieldDecorator('password', {
+          {getFieldDecorator('hashedpassword', {
             rules: [
               {
                 validator: this.validatePassword
