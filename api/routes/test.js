@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../db/db.js");
+const {User} = require("../db/models");
 
 // Default route
 
@@ -17,17 +17,13 @@ router.post("/", upload.single('picture'), (req, res) => {
 	});
 });
 
+
 router.get("/select", (req, res) => {
-	db.any(
-		`SELECT *
-		FROM customer_t
-		ORDER BY customername
-		LIMIT 3;`
-	).then((p) => {
-		return res.send(p)
-	}).catch((error) => {
-		return res.send(error)
-	});
+	User.findOne().then(results => {
+		res.send(results)
+	}).catch(error => {
+		res.status(500).send(error)
+	})
 });
 
 module.exports = router;
