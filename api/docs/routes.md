@@ -2,7 +2,7 @@
 | Route                    | HTTP Verb | Description                                               | Requires Auth |
 |:-------------------------|:----------|:----------------------------------------------------------|:--------------|
 | /user/:username          | GET       | Returns the user with a specific username                 | Yes           |
-| /users/:query            | GET       | Searches for users whose names match a given query string | Yes           |
+| /users/:page?username="" | GET       | Searches for users whose names match a given query string | Yes           |
 | /user/:username/icon     | GET       | Returns profile icon user with a specific username        | Yes           |
 | /user/:username/pic      | GET       | Returns profile picture user with a specific username     | Yes           |
 | /user/:username/big_pic  | GET       | Returns big profile picture user with a specific username | Yes           |
