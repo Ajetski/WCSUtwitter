@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "688cf1be-1b2a-4052-936a-af0ea59bda6e",
+		"_postman_id": "e1a3263a-ec98-4a6b-910a-f290e6590083",
 		"name": "WCSUtwitter",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -213,15 +213,15 @@
 									"disabled": true
 								},
 								{
+									"key": "user",
+									"value": "{\"firstname\": \"Adam1\",\n\"lastname\": \"Jeniski\"}",
+									"type": "text"
+								},
+								{
 									"key": "profpic",
 									"type": "file",
 									"src": "/C:/Users/Ajet/Pictures/Capture.PNG",
 									"disabled": true
-								},
-								{
-									"key": "user",
-									"value": "{\"firstname\": \"Adam1\",\n\"lastname\": \"Jeniski1\"}",
-									"type": "text"
 								}
 							],
 							"options": {
