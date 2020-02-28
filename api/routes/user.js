@@ -1,6 +1,5 @@
 //my modules
 const imageUpload = require("../config/image-upload-config");
-const db = require("../db/db.js");
 const {User} = require("../db/models")
 
 //core modules
