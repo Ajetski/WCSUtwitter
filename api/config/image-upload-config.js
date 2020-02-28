@@ -5,8 +5,9 @@ const fs = require("fs")
 module.exports = multer({
 	storage: multer.diskStorage({
 		destination: async function(req, file, cb) {
+			console.log(1)
 			//delete previous files
-			username = req.body.username || req.params.username
+			username = req.body.user.username || req.params.username
 			previous_path_base = path.resolve("uploaded_media", "user_profile_pics", username)
 			await fs.unlink(previous_path_base + '.png', err => {});
 			await fs.unlink(previous_path_base + '_small.png', err => {});
@@ -17,8 +18,8 @@ module.exports = multer({
 			cb(null, "uploaded_media");
 		},
 		filename: function(req, file, cb) {
-
-			cb(null, req.body.username + ".png"); //Appending .png
+			console.log(2)
+			cb(null, req.body.user.username + ".png"); //Appending .png
 		}
 	}),
 	limits: {
