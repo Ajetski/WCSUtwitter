@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "811772c5-5690-49c0-8796-f25775248ec7",
+		"_postman_id": "688cf1be-1b2a-4052-936a-af0ea59bda6e",
 		"name": "WCSUtwitter",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -10,8 +10,11 @@
 			"item": [
 				{
 					"name": "test",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -30,13 +33,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/test",
+							"raw": "{{url}}/api/test/select",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
-								"test"
+								"test",
+								"select"
 							]
 						}
 					},
@@ -54,14 +58,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/user/Ajet2",
+							"raw": "{{url}}/api/user/Ajet",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"user",
-								"Ajet2"
+								"Ajet"
 							]
 						}
 					},
@@ -73,14 +77,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/user/Ajet2/pic",
+							"raw": "{{url}}/api/user/Ajet/pic",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"user",
-								"Ajet2",
+								"Ajet",
 								"pic"
 							]
 						}
@@ -105,26 +109,36 @@
 								{
 									"key": "username",
 									"value": "Ajet",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "firstname",
 									"value": "Adam",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "lastname",
 									"value": "Jeniski",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "email",
 									"value": "jeniski001@wcsu.edu",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "hashedpassword",
 									"value": "abcdefg",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "user",
+									"value": "{\"username\": \"Ajet\",\n\"firstname\": \"Adam\",\n\"lastname\": \"J\",\n\"email\": \"adam@example.com\",\n\"hashedpassword\": \"password\"}\n",
 									"type": "text"
 								},
 								{
@@ -170,18 +184,21 @@
 							"formdata": [
 								{
 									"key": "username",
-									"value": "Ajet3",
-									"type": "text"
+									"value": "Ajet",
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "firstname",
 									"value": "Adam1",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "lastname",
 									"value": "Jeniski2",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "email",
@@ -200,6 +217,11 @@
 									"type": "file",
 									"src": "/C:/Users/Ajet/Pictures/Capture.PNG",
 									"disabled": true
+								},
+								{
+									"key": "user",
+									"value": "{\"firstname\": \"Adam1\",\n\"lastname\": \"Jeniski1\"}",
+									"type": "text"
 								}
 							],
 							"options": {
@@ -260,39 +282,8 @@
 							}
 						],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "username",
-									"value": "Ajet",
-									"type": "text"
-								},
-								{
-									"key": "firstname",
-									"value": "Adam",
-									"type": "text"
-								},
-								{
-									"key": "lastname",
-									"value": "Jeniski",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "jeniski001@wcsu.edu",
-									"type": "text"
-								},
-								{
-									"key": "hashedpassword",
-									"value": "abcdefg",
-									"type": "text"
-								},
-								{
-									"key": "profpic",
-									"type": "file",
-									"src": "/C:/Users/Ajet/Pictures/Capture.PNG"
-								}
-							],
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"Ajet\",\n\t\"hashedpassword\": \"abcdefg\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -300,13 +291,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/user/",
+							"raw": "{{url}}/api/login/",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
-								"user",
+								"login",
 								""
 							]
 						}
