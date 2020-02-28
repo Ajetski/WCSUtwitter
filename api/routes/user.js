@@ -1,5 +1,5 @@
 //my modules
-const imageUpload = require("../config/image-upload-config");
+const imageUpload = require("../util/image-upload");
 const {User} = require("../db/models")
 
 //core modules
@@ -62,12 +62,12 @@ router.get("/:username/pic", async (req, res) => {
 
 // Create a new user
 router.post("/", imageUpload.single("profpic"), async (req, res) => {
-
-	req.body.user = JSON.parse(req.body.user)
+	if (typeof req.body.user !== "object"){
+		req.body.user = JSON.parse(req.body.user)
+	}
 
 	//get name of uploaded file
 	const image = req.file ? req.file.filename : undefined;
-	console.log(req.file)
 	
 	//if an image has been uploaded, resize and save image
 	if (image) {
@@ -110,7 +110,8 @@ router.post("/", imageUpload.single("profpic"), async (req, res) => {
 			//if image resizeing and saving fails, handle error
 			console.log("Error:", error);
 			return res.status(500).send({
-				error: error
+				error,
+				response: `User ${req.body.user.username} could not be created.`
 			});
 		}
 	}
@@ -134,9 +135,11 @@ router.post("/", imageUpload.single("profpic"), async (req, res) => {
 
 // Update a user's profile data
 router.patch("/:username", imageUpload.single("profpic"), async (req, res) => {
-
+	if (typeof req.body.user !== "object"){
+		req.body.user = JSON.parse(req.body.user)
+	}
 	console.log(req.body.user)
-	req.body.user = JSON.parse(req.body.user)
+	console.log(typeof req.body.user)
 
 	//get name of uploaded file
 	const image = req.file ? req.file.filename : undefined;
