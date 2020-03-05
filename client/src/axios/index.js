@@ -4,4 +4,4 @@ import ajax from './axios'
 const BASE = ''
 
 export const reqSingup = (user) => ajax(BASE + '/api/user', {user}, 'POST')
-export const reqLogin = (username, password) => ajax(BASE + '/api/login', {username, password}, 'POST')
+export const reqLogin = (username, hashedpassword) => ajax(BASE + '/api/login', {username, hashedpassword}, 'POST')
