@@ -6,22 +6,65 @@
 
 |Table|User|
 |:---|:-|
-|ER Origin|Entity|
-|Primary Key|USERNAME|
+|ER Origin|Entity User|
+|Primary Key|ID|
 |Foreign Key||
-|Uniqueness Constraint|USERNAME, EMAIL|
+|Uniqueness Constraint||
 
 
 ###### Attribute Summary
 
 |Name|Type|Range|Req/Opt|
 |:--|:--|:---|:-----|
-|Username|varchar||Req|
-|Email|varchar||Req|
+|ID|serial||Req|
+|fName|varchar||Req|
+|lName|varchar||Req|
 |HashedPassword|char||Req|
-|ProfPic|ByteA||Opt|
-|PrivacySetting|varchar||Opt|
-|NotificationSetting|varchar||Opt|
+|ProfPic|bool||Opt|
+|PrivacySetting|json||Opt|
+|NotificationSetting|json||Opt|
+
+
+
+#### Table UserName
+
+###### Table Summary
+
+|Table|UserName|
+|:---|:-|
+|ER Origin|Normalized Entity User|
+|Primary Key|ID, USERNAME|
+|Foreign Key|ID|
+|Uniqueness Constraint||
+
+
+###### Attribute Summary
+
+|Name|Type|Range|Req/Opt|
+|:--|:--|:---|:-----|
+|ID|Serial||Req|
+|USERNAME|varchar||Req|
+
+
+
+#### Table UserEmail
+
+###### Table Summary
+
+|Table|Email|
+|:---|:-|
+|ER Origin|Normalized Entity User|
+|Primary Key|ID, EMAIL|
+|Foreign Key|ID|
+|Uniqueness Constraint||
+
+
+###### Attribute Summary
+
+|Name|Type|Range|Req/Opt|
+|:--|:--|:---|:-----|
+|ID|serial||Req|
+|Email|varchar||Req|
 
 
 
@@ -31,7 +74,7 @@
 
 |Table|TrustedDevice|
 |:---|:--|
-|ER Origin|Entity|
+|ER Origin|MVA|
 |Primary Key|UserID, authToken|
 |Foreign Key|UserID|
 |Uniqueness Constraint||
@@ -52,7 +95,7 @@
 
 |Table|CurrentSession|
 |:---|:--|
-|ER Origin|Entity|
+|ER Origin|MVA|
 |Primary Key|UserID, sessionID|
 |Foreign Key|UserID|
 |Uniqueness Constraint||
@@ -73,7 +116,7 @@
 
 |Table|Post|
 |:---|:--|
-|ER Origin|Entity|
+|ER Origin|Entity Post|
 |Primary Key|ID|
 |Foreign Key|PosterID, OriginID|
 |Uniqueness Constraint||
@@ -86,10 +129,10 @@
 |ID|serial||Req|
 |PosterID|serial||Req|
 |OriginID|serial||Opt|
-|Media|ByteA||Opt|
-|Text|Varchar||Req|
-|Timestamp|Timestamp||Req|
-|Location|Point||Opt|
+|Media|varchar||Opt|
+|Text|varchar||Req|
+|Timestamp|timestamp||Req|
+|Location|point||Opt|
 
 
 
@@ -99,7 +142,7 @@
 
 |Table|Reply|
 |:---|:--|
-|ER Origin|Entity|
+|ER Origin|Entity Reply|
 |Primary Key|ID|
 |Foreign Key|SenderID, OriginID, ReplyID|
 |Uniqueness Constraint||
@@ -124,7 +167,7 @@
 
 |Table|Follow|
 |:---|:--|
-|ER Origin|Entity|
+|ER Origin|Unary Relationship|
 |Primary Key|Follower, FollowedUser|
 |Foreign Key|Follower, FollowedUser|
 |Uniqueness Constraint||
@@ -146,7 +189,7 @@
 
 |Table|Block|
 |:---|:--|
-|ER Origin|Entity|
+|ER Origin|Unary Relationship|
 |Primary Key|Blocker, BlockedUser|
 |Foreign Key|Blocker, BlockedUser|
 |Uniqueness Constraint||
