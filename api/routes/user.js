@@ -1,6 +1,6 @@
 //my modules
 const imageUpload = require("../util/image-upload");
-const {User} = require("../db/models.js")
+const {User} = require("../db/models.js");
 
 //core modules
 const path = require("path");
@@ -23,7 +23,7 @@ router.get("/:username", async (req, res) => {
 			}
 		});
 		if (!user)
-			return res.status(404).send({error: `User ${req.params.username} not found.`})
+			return res.status(404).send({error: `User ${req.params.username} not found.`});
 		return res.send(user);
 	}
 	catch(error) {
@@ -43,7 +43,7 @@ router.get("/:username/pic", async (req, res) => {
 		});
 		//if user is not found, return 404
 		if (!user)
-			return res.status(404).send({error: `User ${req.params.username} not found.`})
+			return res.status(404).send({error: `User ${req.params.username} not found.`});
 		//if the user has a profile picture, serve it
 		else if (user.profpic)
 			res.sendFile(
@@ -63,7 +63,7 @@ router.get("/:username/pic", async (req, res) => {
 // Create a new user
 router.post("/", imageUpload.single("profpic"), async (req, res) => {
 	if (typeof req.body.user !== "object"){
-		req.body.user = JSON.parse(req.body.user)
+		req.body.user = JSON.parse(req.body.user);
 	}
 
 	//get name of uploaded file
@@ -104,8 +104,7 @@ router.post("/", imageUpload.single("profpic"), async (req, res) => {
 					path.resolve(req.file.destination, "user_profile_pics_small", image)
 				);
 
-			await fs.unlink(req.file.path, err => {
-			});
+			await fs.unlink(req.file.path, err => {});
 		} catch (error) {
 			//if image resizeing and saving fails, handle error
 			console.log("Error:", error);
@@ -123,23 +122,21 @@ router.post("/", imageUpload.single("profpic"), async (req, res) => {
 		res.send({
 			response: `User ${req.body.user.username} has been created.`,
 			profpic: req.body.user.profpic
-		})
+		});
 	}
 	catch (error) {
 		res.status(500).send({
 			error: error,
 			response: `User ${req.body.user.username} could not be created.`
-		})
+		});
 	}
 });
 
 // Update a user's profile data
 router.patch("/:username", imageUpload.single("profpic"), async (req, res) => {
 	if (typeof req.body.user !== "object"){
-		req.body.user = JSON.parse(req.body.user)
+		req.body.user = JSON.parse(req.body.user);
 	}
-	console.log(req.body.user)
-	console.log(typeof req.body.user)
 
 	//get name of uploaded file
 	const image = req.file ? req.file.filename : undefined;
@@ -178,8 +175,7 @@ router.patch("/:username", imageUpload.single("profpic"), async (req, res) => {
 					path.resolve(req.file.destination, "user_profile_pics_small", image)
 				);
 
-			await fs.unlink(req.file.path, err => {
-			});
+			await fs.unlink(req.file.path, err => {});
 		} catch (error) {
 			//if image resizeing and saving fails, handle error
 			return res.status(500).send({
@@ -197,13 +193,13 @@ router.patch("/:username", imageUpload.single("profpic"), async (req, res) => {
 				username: req.params.username
 			}
 		});
-		return res.send({response: `User ${req.params.username} has been updated.`})
+		return res.send({response: `User ${req.params.username} has been updated.`});
 	}
 	catch (error) {
 		return res.status(500).send({
 			error,
 			response: `User ${req.params.username} could not be updated.`
-		})
+		});
 	}
 	
 });
@@ -219,14 +215,14 @@ router.delete("/:username", async (req, res) => {
 			where: {
 				username: req.params.username
 			}
-		})
+		});
 		return res.send({response: `User ${req.params.username} has been deleted.`});
 	}
 	catch (error) {
 		return res.status(500).send({
 			error,
 			response: `User ${req.params.username} could not be updated.`
-		})
+		});
 	}
 });
 
