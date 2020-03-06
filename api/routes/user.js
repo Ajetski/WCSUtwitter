@@ -1,6 +1,6 @@
 //my modules
 const imageUpload = require("../util/image-upload");
-const {User} = require("../db/models")
+const {User} = require("../db/models.js")
 
 //core modules
 const path = require("path");
