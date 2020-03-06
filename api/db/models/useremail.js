@@ -1,7 +1,7 @@
 const sequelize = require('../sequelize.js')
 const { DataTypes } = require('sequelize');
 
-const UserEmail = sequelize.define('users', {
+const UserEmail = sequelize.define('useremail', {
     id: {
         primaryKey: true,
         type: DataTypes.INTEGER,
