@@ -1,15 +1,21 @@
 ## Logical Schema
 
-**User** (<u>Username*</u>, Email*, HashedPassword*, privacySetting, notificationSetting)
+**User** (<u>ID</u>\*, fName*, lName*, HashedPassword*, profPic, 
+privacySetting, notificationSetting)
 
-**TrustedDevices** (<ins>UserID*</ins>, <ins>authToken*</ins>)
+**UserEmail** (<u>ID</u>\*, <u>Email</u>\*)
 
-**CurrentSession** (<ins>UserID*</ins>, <ins>sessionID*</ins>)
+**UserName** (<u>ID</u>\*, <u>Username</u>\*)
 
-**Post** (<ins>ID*</ins>, PosterID*, OriginID*, Image, Video, Text*, Timestamp*, latitude, longitude)
+**TrustedDevices** (<u>UserID</u>\*, <u>authToken</u>\*)
 
-**Reply** (<ins>ID*</ins>, SenderID*, OriginID*, ReplyID, Text*, Timestamp*)
+**CurrentSession** (<u>UserID</u>\*, <u>sessionID</u>\*)
 
-**Follow** (<ins>Follower*</ins>, <ins>FollowedUser*</ins>)
+**Post** (<u>ID</u>\*, PosterID*, OriginID*, Image, Video, 
+Text*, Timestamp*, latitude, longitude)
 
-**Block** (<ins>Follower*</ins>, <ins>FollowedUser*</ins>)
+**Reply** (<u>ID</u>\*, SenderID*, OriginID*, ReplyID, Text*, Timestamp*)
+
+**Follow** (<u>Follower</u>\*, <u>FollowedUser</u>\*)
+
+**Block** (<u>Follower</u>\*, <u>FollowedUser</u>\*)
