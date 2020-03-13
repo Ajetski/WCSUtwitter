@@ -11,10 +11,10 @@ privacySetting, notificationSetting)
 
 **CurrentSession** (<u>UserID</u>\*, <u>sessionID</u>\*)
 
-**Post** (<u>ID</u>\*, PosterID*, OriginID*, Image, Video, 
-Text*, Timestamp*, latitude, longitude)
+**Post** (<u>ID</u>\*, PosterID*, ParentPostID, Media, 
+Text*, Timestamp*, Location)
 
-**Reply** (<u>ID</u>\*, SenderID*, OriginID*, ReplyID, Text*, Timestamp*)
+**Reply** (<u>ID</u>\*, SenderID*, ParentPostID*, PArentReplyID, Text*, Timestamp*)
 
 **Follow** (<u>Follower</u>\*, <u>FollowedUser</u>\*)
 
