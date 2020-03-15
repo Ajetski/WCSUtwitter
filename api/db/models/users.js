@@ -1,42 +1,44 @@
-const sequelize = require('../sequelize.js')
+const sequelize = require('../sequelize');
+
 const { DataTypes } = require('sequelize');
 
+const STRING = DataTypes.STRING;
+const INTEGER = DataTypes.INTEGER;
+const BOOLEAN = DataTypes.BOOLEAN;
+const JSON = DataTypes.JSON;
+
 const Users = sequelize.define('users', {
-    id: {
-        primaryKey: true,
-        type: DataTypes.INTEGER,
-        autoIncrement: true
-    },
-    firstname: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    lastname: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    email: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    hashedpassword: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    profpic: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false
-    },
-    privacysetting: {
-        type: DataTypes.JSON,
-        allowNull: true
-    },
-    notificationsetting: {
-        type: DataTypes.JSON,
-        allowNull: true
-    }
+	id: {
+		primaryKey: true,
+		type: INTEGER,
+		autoIncrement: true
+	},
+	firstname: {
+		type: STRING,
+		allowNull: false
+	},
+	lastname: {
+		type: STRING,
+		allowNull: false
+	},
+	hashedpassword: {
+		type: STRING,
+		allowNull: false
+	},
+	profpic: {
+		type: BOOLEAN,
+		allowNull: false
+	},
+	privacysetting: {
+		type: JSON,
+		allowNull: true
+	},
+	notificationsetting: {
+		type: JSON,
+		allowNull: true
+	}
 }, {
-    timestamps: false
-})
+	timestamps: false
+});
 
 module.exports = Users;

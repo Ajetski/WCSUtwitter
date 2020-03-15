@@ -1,13 +1,16 @@
-const sequelize = require('../sequelize.js')
+const sequelize = require('../sequelize');
+
 const { DataTypes } = require('sequelize');
 
+const STRING = DataTypes.STRING;
+
 const Username = sequelize.define('username', {
-    username: {
-        type: DataTypes.STRING,
-        allowNull: false
-    }
+	username: {
+		type: STRING,
+		allowNull: false
+	}
 }, {
-    timestamps: false
-})
+	timestamps: false
+});
 
 module.exports = Username;
