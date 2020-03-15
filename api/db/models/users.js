@@ -7,7 +7,7 @@ const INTEGER = DataTypes.INTEGER;
 const BOOLEAN = DataTypes.BOOLEAN;
 const JSON = DataTypes.JSON;
 
-const Users = sequelize.define('users', {
+const Users = sequelize.define('user', {
 	id: {
 		primaryKey: true,
 		type: INTEGER,
@@ -38,7 +38,8 @@ const Users = sequelize.define('users', {
 		allowNull: true
 	}
 }, {
-	timestamps: false
+	timestamps: false,
+	tableName: 'users'
 });
 
 module.exports = Users;
