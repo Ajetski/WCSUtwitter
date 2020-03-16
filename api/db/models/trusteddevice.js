@@ -9,7 +9,6 @@ const TrustedDevice = sequelize.define('trusteddevice', {
 	userid: {
 		primaryKey: true,
 		type: INTEGER,
-		autoIncrement: true,
 		allowNull: false
 	},
 	authtoken: {

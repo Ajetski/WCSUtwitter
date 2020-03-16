@@ -9,7 +9,6 @@ const LoginSession = sequelize.define('loginsession', {
 	userid: {
 		primaryKey: true,
 		type: INTEGER,
-		autoIncrement: true,
 		allowNull: false
 	},
 	sessionid: {

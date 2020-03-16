@@ -9,7 +9,6 @@ const UserEmail = sequelize.define('useremail', {
 	userid: {
 		primaryKey: true,
 		type: INTEGER,
-		autoIncrement: true,
 		allowNull: false
 	},
 	email: {
