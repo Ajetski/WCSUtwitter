@@ -42,10 +42,23 @@ router.get('/:username', async (req, res) => {
 router.get('/:username/pic', async (req, res) => {
 	try{
 		//find a user by their username
+		const temp_username = await UserName.findOne({
+			where: {
+				username: req.params.username
+			}
+		});
+
+		if (temp_username === null)
+			return res.status(404).send({
+				error: `Cannot find user '${req.params.username}'`
+			});
+		
+		const userId = temp_username.get('id');
+		
 		const user = await User.findOne({
 			attributes: ['profpic'],
 			where:{
-				username: req.params.username
+				id: userId
 			}
 		});
 		//if user is not found, return 404
@@ -94,7 +107,7 @@ router.post('/', imageUpload.single('profpic'), async (req, res) => {
 				.resize({ width: 500, height: 500 })
 				.png()
 				.toFile(
-					path.resolve(req.file.destination, 'user_profile_pics_large', image)
+					path.resolve(req.file.destination, 'user_profile_pics_large', image + '.png')
 				);
 
 			//resize and save medium image
@@ -102,7 +115,7 @@ router.post('/', imageUpload.single('profpic'), async (req, res) => {
 				.resize({ width: 250, height: 250 })
 				.png()
 				.toFile(
-					path.resolve(req.file.destination, 'user_profile_pics_medium', image)
+					path.resolve(req.file.destination, 'user_profile_pics_medium', image + '.png')
 				);
 			
 			//resize and save small image
@@ -110,7 +123,7 @@ router.post('/', imageUpload.single('profpic'), async (req, res) => {
 				.resize({ width: 50, height: 50 })
 				.png()
 				.toFile(
-					path.resolve(req.file.destination, 'user_profile_pics_small', image)
+					path.resolve(req.file.destination, 'user_profile_pics_small', image + '.png')
 				);
 
 			fs.unlink(req.file.path, () => { });
@@ -134,16 +147,13 @@ router.post('/', imageUpload.single('profpic'), async (req, res) => {
 		//destructure the variables needed from req.body.user
 		const {username, firstname, lastname, email, hashedpassword, profpic} = req.body.user;
 
-		//create an instance in the user table
-		const user = await User.create({
+		//create an instance in the user table and save the ID
+		const userId = await User.create({
 			firstname,
 			lastname,
 			hashedpassword,
 			profpic,
-		});
-
-		//save the user's id from the new instance in users table
-		const userId = user.dataValues.id;
+		}).get('id');
 
 		//create an instance in the username table w fk to users
 		await UserName.create({
