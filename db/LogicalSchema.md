@@ -1,20 +1,20 @@
 ## Logical Schema
 
-**User** (<u>ID</u>\*, fName*, lName*, HashedPassword*, profPic, 
+**User** (<u>ID</u>\*, firstName*, lastName*, HashedPassword*, profPic, 
 privacySetting, notificationSetting)
 
-**UserEmail** (<u>ID</u>\*, <u>Email</u>\*)
+**UserEmail** (<u>UserID</u>\*, <u>Email</u>\*)
 
-**UserName** (<u>ID</u>\*, <u>Username</u>\*)
+**UserName** (<u>UserID</u>\*, <u>Username</u>\*)
 
 **TrustedDevices** (<u>UserID</u>\*, <u>authToken</u>\*)
 
 **CurrentSession** (<u>UserID</u>\*, <u>sessionID</u>\*)
 
-**Post** (<u>ID</u>\*, PosterID*, ParentPostID, Media, 
+**Post** (<u>ID</u>\*, UserID*, ParentPostID, Media, 
 Text*, Timestamp*, Location)
 
-**Reply** (<u>ID</u>\*, SenderID*, ParentPostID*, PArentReplyID, Text*, Timestamp*)
+**Reply** (<u>ID</u>\*, UserID*, ParentPostID*, PArentReplyID, Text*, Timestamp*)
 
 **Follow** (<u>Follower</u>\*, <u>FollowedUser</u>\*)
 
