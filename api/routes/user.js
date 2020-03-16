@@ -14,7 +14,6 @@ const router = express.Router();
 
 // Get a user's profile data
 router.get('/:username', async (req, res) => {
-	console.log(req.params.username);
 	try{
 		const username = await UserName.findOne({
 			attributes: ['userid'],
