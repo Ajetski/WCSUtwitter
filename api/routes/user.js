@@ -14,24 +14,53 @@ const router = express.Router();
 
 // Get a user's profile data
 router.get('/:username', async (req, res) => {
+	console.log(req.params.username);
 	try{
-		const userId = await UserName.findOne({
-			attributes: ['id'],
+		const username = await UserName.findOne({
+			attributes: ['userid'],
 			where:{
 				username: req.params.username
 			}
 		});
+		
+		if(!username)
+			res.status(404).send({
+				error: `User '${req.params.username}' not found.`
+			});
+		
+		const userId = username.get('userid');
+		
+			
 		const user = await User.findOne({
 			attributes: {
 				exclude: ['hashedpassword']
 			},
 			where:{
-				username: userId.id
+				id: userId
+
 			}
 		});
+
+		const email = await UserEmail.findOne({
+			attributes: ['email'],
+			where: {
+				userid: userId
+			}
+		}).get('email');
+
 		if (!user)
 			return res.status(404).send({error: `User ${req.params.username} not found.`});
-		return res.send(user);
+		return res.send({
+			id: user.id,
+			username: req.params.username,
+			email,
+			firstname: user.firstname,
+			lastname: user.lastname,
+			profpic: user.profpic,
+			privacysetting: user.privacysetting,
+			notificationsetting: user.notificationsetting
+				
+		});
 	}
 	catch(error) {
 		return res.status(500).send({ error: error.message });
@@ -42,18 +71,19 @@ router.get('/:username', async (req, res) => {
 router.get('/:username/pic', async (req, res) => {
 	try{
 		//find a user by their username
-		const temp_username = await UserName.findOne({
+		const username = await UserName.findOne({
+			attributes: ['userid'],
 			where: {
 				username: req.params.username
 			}
 		});
 
-		if (temp_username === null)
+		if (!username)
 			return res.status(404).send({
 				error: `Cannot find user '${req.params.username}'`
 			});
 		
-		const userId = temp_username.get('id');
+		const userId = username.get('userid');
 		
 		const user = await User.findOne({
 			attributes: ['profpic'],
@@ -157,13 +187,13 @@ router.post('/', imageUpload.single('profpic'), async (req, res) => {
 
 		//create an instance in the username table w fk to users
 		await UserName.create({
-			id: userId,
+			userid: userId,
 			username
 		});
 
 		//create an instance in the useremail table w fk to users
 		await UserEmail.create({
-			id: userId,
+			userid: userId,
 			email
 		});
 
@@ -266,19 +296,29 @@ router.delete('/:username', async (req, res) => {
 	await fs.unlink(path.resolve('uploaded_media', 'user_profile_pics_small', req.params.username) + '.png', () => {});
 
 	try{
-		const userId = await UserName.findOne({
+		//find a user by their username
+		const username = await UserName.findOne({
+			attributes: ['userid'],
 			where: {
 				username: req.params.username
 			}
-		}).get('id');
+		});
+
+		if (!username)
+			return res.status(404).send({
+				error: `Cannot find user '${req.params.username}'`
+			});
+		
+		const userId = username.get('userid');
+
 		await UserEmail.destroy({
 			where: {
-				id: userId
+				userid: userId
 			}
 		});
 		await UserName.destroy({
 			where: {
-				id: userId
+				userid: userId
 			}
 		});
 		await User.destroy({
@@ -291,7 +331,7 @@ router.delete('/:username', async (req, res) => {
 	catch (error) {
 		return res.status(500).send({
 			error,
-			response: `User ${req.params.username} could not be updated.`
+			response: `User ${req.params.username} could not be deleted.`
 		});
 	}
 });
