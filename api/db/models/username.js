@@ -6,10 +6,11 @@ const STRING = DataTypes.STRING;
 const INTEGER = DataTypes.INTEGER;
 
 const Username = sequelize.define('username', {
-	id: {
+	userid: {
 		primaryKey: true,
 		type: INTEGER,
-		autoIncrement: true
+		autoIncrement: true,
+		allowNull: false
 	},
 	username: {
 		primaryKey: true,

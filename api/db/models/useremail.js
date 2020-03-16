@@ -6,10 +6,11 @@ const STRING = DataTypes.STRING;
 const INTEGER = DataTypes.INTEGER;
 
 const UserEmail = sequelize.define('useremail', {
-	id: {
+	userid: {
 		primaryKey: true,
 		type: INTEGER,
-		autoIncrement: true
+		autoIncrement: true,
+		allowNull: false
 	},
 	email: {
 		primaryKey: true,
