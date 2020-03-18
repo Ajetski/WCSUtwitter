@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Ajetski/WCSUtwitter#readme",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.2",
@@ -26,6 +27,7 @@
     "sharp": "^0.24.1"
   },
   "devDependencies": {
+    "eslint": "^6.8.0",
     "nodemon": "^2.0.2"
   }
 }

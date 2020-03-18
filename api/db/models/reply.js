@@ -4,43 +4,37 @@ const { DataTypes } = require('sequelize');
 
 const STRING = DataTypes.STRING;
 const INTEGER = DataTypes.INTEGER;
-const BOOLEAN = DataTypes.BOOLEAN;
-const JSON = DataTypes.JSON;
+const TIMESTAMP = DataTypes.DATE;
 
-const Users = sequelize.define('user', {
+const Reply = sequelize.define('reply', {
 	id: {
 		primaryKey: true,
 		type: INTEGER,
 		autoIncrement: true,
 		allowNull: false
 	},
-	firstname: {
+	userid: {
+		type: INTEGER,
+		allowNull: false
+	},
+	parentpostid: {
+		type: INTEGER,
+		allowNull: false
+	},
+	parentreplyid: {
+		type: INTEGER
+	},
+	textcontent: {
 		type: STRING,
 		allowNull: false
 	},
-	lastname: {
-		type: STRING,
+	replytime: {
+		type: TIMESTAMP,
 		allowNull: false
-	},
-	hashedpassword: {
-		type: STRING,
-		allowNull: false
-	},
-	profpic: {
-		type: BOOLEAN,
-		allowNull: false
-	},
-	privacysetting: {
-		type: JSON,
-		allowNull: true
-	},
-	notificationsetting: {
-		type: JSON,
-		allowNull: true
 	}
 }, {
 	timestamps: false,
-	tableName: 'users'
+	tableName: 'reply'
 });
 
-module.exports = Users;
+module.exports = Reply;

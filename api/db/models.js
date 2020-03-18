@@ -1,7 +1,9 @@
-const sequalize = require('./sequelize')
-const User = require('./models/users')
+const User = require('./models/users');
+const UserName = require('./models/username');
+const UserEmail = require('./models/useremail');
 
 module.exports = {
-    User,
-    
-}
+	User,
+	UserName,
+	UserEmail
+};
