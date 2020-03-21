@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './contentList.less';
 import { List, message, Avatar, Spin } from 'antd';
 

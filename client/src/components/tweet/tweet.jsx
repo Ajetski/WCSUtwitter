@@ -15,13 +15,13 @@ export default class Tweet extends Component {
           </div>   
         </div>
         <div className="ant-tweet-right">
-          <div>
+
             <TextArea
               style={{ fontSize: '18px', borderColor: 'white' }} 
               placeholder="What's happening?"
               autoSize={{ minRows: 2, maxRows: 2 }}
             />
-          </div>
+
           <div className="ant-tweet-right-bottom">
             <div className="ant-tweet-right-bottom-left">
               <Icon type="camera" theme="twoTone" twoToneColor="#52c41a" />
