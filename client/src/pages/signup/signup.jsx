@@ -10,13 +10,14 @@ import {
   message,
   Modal
 } from 'antd';
-import bcrypt from 'bcryptjs';
+//import bcrypt from 'bcryptjs';
 
 import {reqSingup} from '../../axios/index'
 import memoryUtils from '../../utils/memoryUtils'
 import storageUtils from '../../utils/storageUtils'
+import aesUtils from '../../utils/aesUtils'
 
-const saltRounds = 10;
+//const saltRounds = 10;
 
 function readAgreementInfo() {
   Modal.info({
@@ -39,7 +40,8 @@ class RegistrationForm extends React.Component {
     e.preventDefault()
     this.props.form.validateFields(async (err, user) => {
       if (!err) {
-        user.hashedpassword = await bcrypt.hash(user.hashedpassword, saltRounds)
+        //user.hashedpassword = await bcrypt.hash(user.hashedpassword, saltRounds)
+        user.hashedpassword = aesUtils.aesEncrypt(user.hashedpassword, user.username)
         delete user.confirm
         const result = await reqSingup(user)
         console.log(result)
