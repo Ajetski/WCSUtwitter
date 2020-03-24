@@ -1,0 +1,138 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.fileUploader {
+  border: 1px solid #e1e1e1;
+}
+
+.fileContainer {
+  background: #fff;
+  box-shadow: none;
+  position: relative;
+  border-radius: 10px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: all 0.3s ease-in;
+  height: 275px;
+}
+
+.fileContainer p:empty {
+  font-size: 12px;
+  margin: 0;
+}
+
+.fileContainer .uploadPicturesWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
+  top: -51px;
+  width: 300px;
+  height: auto;
+}
+.uploadPicturesWrapper > div:empty {
+  height: 1px;
+}
+
+.fileContainer .uploadPictureContainer {
+  width: 285px;
+  height: 224px;
+  /* margin: 5%; */
+  padding: 5px;
+  background: #edf2f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* height: inherit; */
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+  /* border: 1px solid #d0dbe4; */
+  position: relative;
+}
+
+.fileContainer .deleteImage {
+  position: absolute;
+  right: unset;
+  top: unset;
+  border-radius: 0;
+  text-align: center;
+  cursor: pointer;
+  font-size: 26px;
+  font-weight: bold;
+  line-height: 30px;
+  width: 134px;
+  height: 30px;
+  left: 0;
+  bottom: -45px;
+  background-image: url(https://cdn.onlinewebfonts.com/svg/img_96165.png);
+  background-position: left 4px top 3px;
+  background-repeat: no-repeat;
+  background-size: 17px 23px;
+  background-color: transparent;
+  color: black;
+  overflow: hidden;
+  text-indent: -156px;
+}
+
+.fileContainer .deleteImage:after {
+  content: "Delete";
+  position: absolute;
+  right: -45px;
+  font-size: 16px;
+}
+
+.fileContainer .uploadPictureContainer img.uploadPicture {
+  width: 285px;
+  height: 235px;
+}
+
+.fileContainer .errorsContainer {
+  max-width: 300px;
+  font-size: 12px;
+  position: absolute;
+  z-index: 10;
+  top: 35%;
+  background: rgba(255, 0, 0, 0.7);
+  padding: 10px;
+  text-align: center;
+  color: white;
+  margin: 0 auto;
+  width: 79%;
+  border-radius: 6px;
+}
+
+.fileContainer .errorsContainer:empty {
+  opacity: 0;
+}
+
+.fileContainer .chooseFileButton {
+  padding: 6px 23px;
+  background-image: url(./icon_upload.svg);
+  background-color: #c1c1c1;
+  background-repeat: no-repeat;
+  background-position: 50% 23%;
+  background-size: 25%;
+  border-radius: 0;
+  color: white;
+  font-weight: 300;
+  font-size: 14px;
+  margin: 10px 0;
+  transition: all 0.2s ease-in;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  width: 95%;
+  height: 100%;
+}
+
+.fileContainer .chooseFileButton:hover {
+  background-image: url(./icon_upload.svg);
+  background-color: #c1c1c1;
+  background-repeat: no-repeat;
+  background-position: 50% 23%;
+  background-size: 25%;
+}
