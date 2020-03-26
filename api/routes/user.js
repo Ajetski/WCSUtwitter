@@ -180,13 +180,21 @@ router.post('/', imageUpload.single('profpic'), async (req, res) => {
 
 		const hashedpassword = await bycrypt.hash(password, 8);
 
+		console.log({username, firstname, lastname, email, password, hashedpassword, profpic});
+
 		//create an instance in the user table and save the ID
-		const userId = await User.create({
+		const user = await User.create({
 			firstname,
 			lastname,
 			hashedpassword,
 			profpic,
-		}).get('id');
+		});
+		
+		console.log(user);
+
+		const userId = user.get('id');
+
+		console.log(userId);
 
 		//create an instance in the username table w fk to users
 		await UserName.create({
