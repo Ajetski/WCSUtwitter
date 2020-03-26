@@ -13,7 +13,7 @@ const {User, UserName, LoginSession} = require('../db/models.js');
 const bcrypt = require('bcryptjs');
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const sequelize = require('sequelize');
+const sequelize = require('../db/sequelize');
 const router = express.Router();
 
 //todo:
@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
 	//req.body.username
 	//req.body.password
 
-	const transaction = sequelize.transaction();
+	const transaction = await sequelize.transaction();
 
 	try{
 		const username = await UserName.findOne({
@@ -41,8 +41,9 @@ router.post('/', async (req, res) => {
 		});
 		if (!username)
 			return res.status(404).send({error: `User ${req.params.username} not found.`});
+			
+		const userId = username.get('userid');
 
-		const userId = username.get('id');
 		const userHashedPassword = await User.findOne({
 			attributes: ['hashedpassword'],
 			where: {
@@ -76,7 +77,7 @@ router.post('/', async (req, res) => {
 
 	}
 	catch(error) {
-		transaction.rollback();
+		await transaction.rollback();
 		return res.status(500).send({
 			response: `Login attempt for user '${req.body.username}' has failed.`,
 			error: error.message
