@@ -8,6 +8,7 @@ const path = require('path');
 const fs = require('fs');
 
 //npm modules
+const bycrypt = require('bcryptjs');
 const sharp = require('sharp');
 const express = require('express');
 const router = express.Router();
@@ -111,6 +112,7 @@ router.get('/:username/pic', async (req, res) => {
 
 // Create a new user
 router.post('/', imageUpload.single('profpic'), async (req, res) => {
+	
 	if (typeof req.body.user !== 'object'){
 		req.body.user = JSON.parse(req.body.user);
 	}
@@ -174,7 +176,9 @@ router.post('/', imageUpload.single('profpic'), async (req, res) => {
 
 	try{
 		//destructure the variables needed from req.body.user
-		const {username, firstname, lastname, email, hashedpassword, profpic} = req.body.user;
+		const {username, firstname, lastname, email, password, profpic} = req.body.user;
+
+		const hashedpassword = await bycrypt.hash(password, 8);
 
 		//create an instance in the user table and save the ID
 		const userId = await User.create({
