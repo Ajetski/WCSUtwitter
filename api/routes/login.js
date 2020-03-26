@@ -10,7 +10,7 @@ const {User, UserName, LoginSession} = require('../db/models.js');
 
 
 //npm modules
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const sequelize = require('sequelize');
