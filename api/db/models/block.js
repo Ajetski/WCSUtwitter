@@ -8,13 +8,11 @@ const Block = sequelize.define('block', {
 	blocker: {
 		primaryKey: true,
 		type: INTEGER,
-		autoIncrement: true,
 		allowNull: false
 	},
 	blockeduser: {
 		primaryKey: true,
 		type: INTEGER,
-		autoIncrement: true,
 		allowNull: false
 	}
 }, {

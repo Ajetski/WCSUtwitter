@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize');
 
 const STRING = DataTypes.STRING;
 const INTEGER = DataTypes.INTEGER;
-const LOCATION = DataTypes.LOCATION;
+const POINT = DataTypes.GEOGRAPHY('POINT');
 const BYTEA = DataTypes.BLOB;
 const TIMESTAMP = DataTypes.DATE;
 
@@ -34,7 +34,7 @@ const Post = sequelize.define('post', {
 		allowNull: false
 	},
 	postloc: {
-		type: LOCATION
+		type: POINT
 	}
 }, {
 	timestamps: false,
