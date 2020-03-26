@@ -1,5 +1,4 @@
 const { Sequelize } = require('sequelize');
-require('dotenv').config();
 
 // For the following line to work, you must either have a .env file with the following format:
 // DB_CONNECTION_STRING=postgres://example
