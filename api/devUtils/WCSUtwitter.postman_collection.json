@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e1a3263a-ec98-4a6b-910a-f290e6590083",
+		"_postman_id": "70546367-6138-41fa-8a30-872ba44104dd",
 		"name": "WCSUtwitter",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -58,14 +58,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/user/chen",
+							"raw": "{{url}}/api/user/Ajet",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"user",
-								"chen"
+								"Ajet"
 							]
 						}
 					},
@@ -92,6 +92,44 @@
 					"response": []
 				},
 				{
+					"name": "Username Exists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/user/Ajet",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"Ajet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Email Exists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/user/Ajet",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"Ajet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create User",
 					"request": {
 						"method": "POST",
@@ -104,8 +142,20 @@
 							}
 						],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"user\": {\r\n    \"username\": \"chen\",\r\n    \"hashedpassword\": \"b64e9af\",\r\n    \"email\": \"chen@wcsu.edu\",\r\n    \"firstname\": \"Ray\",\r\n    \"lastname\": \"Chen\"\r\n  }\r\n}",
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user",
+									"value": "{\n    \"username\": \"Ajet\",\n    \"password\": \"test123\",\n    \"email\": \"jeniski001@wcsu.edu\",\n    \"firstname\": \"Adam\",\n    \"lastname\": \"Jeniski\"\n}",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							],
 							"options": {
 								"raw": {
 									"language": "json"
@@ -242,7 +292,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"username\": \"Ajet\",\n\t\"hashedpassword\": \"abcdefg\"\n}",
+							"raw": "{\n\t\"username\": \"Ajet\",\n\t\"password\": \"test123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
