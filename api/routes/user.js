@@ -110,6 +110,58 @@ router.get('/:username/pic', async (req, res) => {
 	}
 });
 
+// Get if a username exists
+router.get('/username/:username', async (req, res) => {
+	try{
+		if(await UserName.findOne({
+			where: {
+				username: req.params.username
+			}
+		})){
+			return res.send({
+				exists: true
+			});
+		}
+		else{
+			return res.status(404).send({
+				exists: false
+			});
+		}
+	}
+	catch(error){
+		console.log('Error:', error);
+		return res.status(500).send({
+			error
+		});
+	}
+});
+
+// Gets if a email exists 
+router.get('/email/:email', async (req, res) => {
+	try{
+		if(await UserEmail.findOne({
+			where: {
+				email: req.params.email
+			}
+		})){
+			return res.send({
+				exists: true
+			});
+		}
+		else{
+			return res.status(404).send({
+				exists: false
+			});
+		}
+	}
+	catch(error){
+		console.log('Error:', error);
+		return res.status(500).send({
+			error
+		});
+	}
+});
+
 // Create a new user
 router.post('/', imageUpload.single('profpic'), async (req, res) => {
 	
