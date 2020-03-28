@@ -125,7 +125,7 @@ router.get('/username/:username', async (req, res) => {
 			});
 		}
 		else{
-			return res.status(404).send({
+			return res.send({
 				exists: false
 			});
 		}
@@ -151,7 +151,7 @@ router.get('/email/:email', async (req, res) => {
 			});
 		}
 		else{
-			return res.status(404).send({
+			return res.send({
 				exists: false
 			});
 		}
