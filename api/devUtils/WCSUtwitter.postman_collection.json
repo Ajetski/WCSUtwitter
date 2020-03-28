@@ -97,13 +97,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/user/Ajet",
+							"raw": "{{url}}/api/user/username/Ajet",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"user",
+								"username",
 								"Ajet"
 							]
 						}
@@ -116,14 +117,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/user/Ajet",
+							"raw": "{{url}}/api/user/email/jeniski001@wcsu.edu",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"user",
-								"Ajet"
+								"email",
+								"jeniski001@wcsu.edu"
 							]
 						}
 					},
@@ -146,7 +148,7 @@
 							"formdata": [
 								{
 									"key": "user",
-									"value": "{\n    \"username\": \"Ajet\",\n    \"password\": \"test123\",\n    \"email\": \"jeniski001@wcsu.edu\",\n    \"firstname\": \"Adam\",\n    \"lastname\": \"Jeniski\"\n}",
+									"value": "{\n    \"username\": \"Ajet\",\n    \"password\": \"9de5f094a6c3beb830b8d283beee7bc3\",\n    \"email\": \"jeniski001@wcsu.edu\",\n    \"firstname\": \"Adam\",\n    \"lastname\": \"Jeniski\"\n}",
 									"type": "text"
 								},
 								{
@@ -259,14 +261,39 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/user/Ajet",
+							"raw": "{{url}}/api/user",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
-								"user",
-								"Ajet"
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Search Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/users/Ajet/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"Ajet",
+								"1"
 							]
 						}
 					},
@@ -292,7 +319,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"username\": \"Ajet\",\n\t\"password\": \"test123\"\n}",
+							"raw": "{\n\t\"username\": \"Ajet\",\n\t\"password\": \"9de5f094a6c3beb830b8d283beee7bc3\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -317,6 +344,16 @@
 			"protocolProfileBehavior": {}
 		}
 	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTg1Mzc2MzE4LCJleHAiOjE1ODU1NDkxMTh9.1frFsdZxHLF1o_Lh3xxwQsCc8MTi1O5_Hs1jWXqiiEE",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
@@ -341,7 +378,7 @@
 	],
 	"variable": [
 		{
-			"id": "0988f883-0dd3-4f9f-9a6f-3f97559235ab",
+			"id": "34a49f08-4a0f-4434-89d0-1a1e21b969c1",
 			"key": "url",
 			"value": "localhost:8080",
 			"type": "string"
