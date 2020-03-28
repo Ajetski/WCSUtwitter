@@ -10,14 +10,11 @@ import {
   message,
   Modal
 } from 'antd';
-//import bcrypt from 'bcryptjs';
 
 import {reqSingup, reqUserIsExist, reqEmailIsExist} from '../../axios/index'
 import memoryUtils from '../../utils/memoryUtils'
 import storageUtils from '../../utils/storageUtils'
 import aesUtils from '../../utils/aesUtils'
-
-//const saltRounds = 10;
 
 function readAgreementInfo() {
   Modal.info({
@@ -32,7 +29,7 @@ function readAgreementInfo() {
 }
 
 async function userIsExist(username) {
-  return await reqUserIsExist(username);
+  return await reqUserIsExist(username)
 }
 
 async function emailIsExist(email) {
@@ -48,7 +45,6 @@ class RegistrationForm extends React.Component {
     e.preventDefault()
     this.props.form.validateFields(async (err, user) => {
       if (!err) {
-        //user.hashedpassword = await bcrypt.hash(user.hashedpassword, saltRounds)
         user.hashedpassword = aesUtils.aesEncrypt(user.hashedpassword, user.username)
         delete user.confirm
         const result = await reqSingup(user)
@@ -101,19 +97,25 @@ class RegistrationForm extends React.Component {
       callback('User name cannot be longer than 12 characters!')
     } else if (!/^[a-zA-Z0-9_]+$/.test(value)) {
       callback('User name must be letters, numbers, or underscores!')
-    } else if(!userIsExist(value)){
-      callback('Username already exists!')
     } else {
-      callback()
+      userIsExist(value).then(response => {
+        if(response.data.exists){
+          callback('Username already exists!')
+        } else {
+          callback()
+        }
+      })
     }
   }
 
   validateEmail = (rule, value, callback)  => {
-    if (emailIsExist(value)) {
-      callback('This email is already registered!')
-    } else {
-      callback()
-    }
+    emailIsExist(value).then(response => {
+      if(response.data.exists){
+        callback('This email is already registered!')
+      } else {
+        callback()
+      }
+    })
   }
 
   validatePassword = (rule, value, callback) => {
