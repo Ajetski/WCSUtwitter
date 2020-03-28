@@ -7,6 +7,7 @@
 */
 //my modules
 const {User, UserName, LoginSession} = require('../db/models.js');
+const { aesDecrypt } = require('../util/encryption');
 
 
 //npm modules
@@ -16,16 +17,6 @@ const jwt = require('jsonwebtoken');
 const sequelize = require('../db/sequelize');
 const router = express.Router();
 
-//todo:
-/*
-1) accept a post request w a useranme and plain text password
-2) look in the DB for a user w that username
-3) see if the user's hashed password is a hashed version of the password they provide us
-4) if so, log them in via adding a session to the DB
--	to do this, we need to create a session id (auth token, JWT)
-5) then serve back the JWT in the response to the user
-*/
-
 // Get a user's profile data
 router.post('/', async (req, res) => {
 	//req.body.username
@@ -34,6 +25,8 @@ router.post('/', async (req, res) => {
 	const transaction = await sequelize.transaction();
 
 	try{
+		req.body.password = aesDecrypt(req.body.password, req.body.username);
+		
 		const username = await UserName.findOne({
 			where: {
 				username: req.body.username
