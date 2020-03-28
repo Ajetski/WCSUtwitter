@@ -26,13 +26,12 @@ router.get('/:username', auth, async (req, res) => {
 		});
 		
 		if(!username)
-			res.status(404).send({
+			return res.status(404).send({
 				error: `User '${req.params.username}' not found.`
 			});
 		
 		const userId = username.get('userid');
 		
-			
 		const user = await User.findOne({
 			attributes: {
 				exclude: ['hashedpassword']
