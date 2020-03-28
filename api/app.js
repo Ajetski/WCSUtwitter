@@ -1,5 +1,9 @@
 const express = require('express');
 
+require('dotenv').config();
+
+
+
 const appConfig = require('./config/main-config.js');
 const routeConfig = require('./config/route-config.js');
 //const errorConfig = require('./config/error-config.js');

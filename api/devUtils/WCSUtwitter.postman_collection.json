@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e1a3263a-ec98-4a6b-910a-f290e6590083",
+		"_postman_id": "70546367-6138-41fa-8a30-872ba44104dd",
 		"name": "WCSUtwitter",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -58,14 +58,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/user/chen",
+							"raw": "{{url}}/api/user/Ajet",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"user",
-								"chen"
+								"Ajet"
 							]
 						}
 					},
@@ -92,6 +92,46 @@
 					"response": []
 				},
 				{
+					"name": "Username Exists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/user/username/Ajet",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"username",
+								"Ajet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Email Exists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/user/email/jeniski001@wcsu.edu",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"email",
+								"jeniski001@wcsu.edu"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create User",
 					"request": {
 						"method": "POST",
@@ -104,8 +144,20 @@
 							}
 						],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"user\": {\r\n    \"username\": \"chen\",\r\n    \"hashedpassword\": \"b64e9af\",\r\n    \"email\": \"chen@wcsu.edu\",\r\n    \"firstname\": \"Ray\",\r\n    \"lastname\": \"Chen\"\r\n  }\r\n}",
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user",
+									"value": "{\n    \"username\": \"Ajet\",\n    \"password\": \"9de5f094a6c3beb830b8d283beee7bc3\",\n    \"email\": \"jeniski001@wcsu.edu\",\n    \"firstname\": \"Adam\",\n    \"lastname\": \"Jeniski\"\n}",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							],
 							"options": {
 								"raw": {
 									"language": "json"
@@ -209,14 +261,39 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/user/Ajet",
+							"raw": "{{url}}/api/user",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
-								"user",
-								"Ajet"
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Search Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/users/Ajet/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"Ajet",
+								"1"
 							]
 						}
 					},
@@ -242,7 +319,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"username\": \"Ajet\",\n\t\"hashedpassword\": \"abcdefg\"\n}",
+							"raw": "{\n\t\"username\": \"Ajet\",\n\t\"password\": \"9de5f094a6c3beb830b8d283beee7bc3\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -267,6 +344,16 @@
 			"protocolProfileBehavior": {}
 		}
 	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTg1Mzc2MzE4LCJleHAiOjE1ODU1NDkxMTh9.1frFsdZxHLF1o_Lh3xxwQsCc8MTi1O5_Hs1jWXqiiEE",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
@@ -291,7 +378,7 @@
 	],
 	"variable": [
 		{
-			"id": "0988f883-0dd3-4f9f-9a6f-3f97559235ab",
+			"id": "34a49f08-4a0f-4434-89d0-1a1e21b969c1",
 			"key": "url",
 			"value": "localhost:8080",
 			"type": "string"

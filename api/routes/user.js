@@ -1,19 +1,23 @@
 //my modules
 const imageUpload = require('../util/image-upload');
-const { User, UserName, UserEmail } = require('../db/models');
+const { User, UserName, UserEmail, Reply, Block, Follow, Post, TrustedDevice, LoginSession } = require('../db/models');
 const sequelize = require('../db/sequelize');
+const auth = require('../middleware/auth');
+const { aesDecrypt } = require('../util/encryption');
 
 //core modules
 const path = require('path');
 const fs = require('fs');
 
 //npm modules
+const { Op } = require('sequelize');
+const bycrypt = require('bcryptjs');
 const sharp = require('sharp');
 const express = require('express');
 const router = express.Router();
 
 // Get a user's profile data
-router.get('/:username', async (req, res) => {
+router.get('/:username', auth, async (req, res) => {
 	try{
 		const username = await UserName.findOne({
 			attributes: ['userid'],
@@ -23,13 +27,12 @@ router.get('/:username', async (req, res) => {
 		});
 		
 		if(!username)
-			res.status(404).send({
+			return res.status(404).send({
 				error: `User '${req.params.username}' not found.`
 			});
 		
 		const userId = username.get('userid');
 		
-			
 		const user = await User.findOne({
 			attributes: {
 				exclude: ['hashedpassword']
@@ -67,7 +70,7 @@ router.get('/:username', async (req, res) => {
 });
 
 // Get a user's profile picture
-router.get('/:username/pic', async (req, res) => {
+router.get('/:username/pic', auth, async (req, res) => {
 	try{
 		//find a user by their username
 		const username = await UserName.findOne({
@@ -109,8 +112,61 @@ router.get('/:username/pic', async (req, res) => {
 	}
 });
 
+// Get if a username exists
+router.get('/username/:username', async (req, res) => {
+	try{
+		if(await UserName.findOne({
+			where: {
+				username: req.params.username
+			}
+		})){
+			return res.send({
+				exists: true
+			});
+		}
+		else{
+			return res.status(404).send({
+				exists: false
+			});
+		}
+	}
+	catch(error){
+		console.log('Error:', error);
+		return res.status(500).send({
+			error
+		});
+	}
+});
+
+// Gets if a email exists 
+router.get('/email/:email', async (req, res) => {
+	try{
+		if(await UserEmail.findOne({
+			where: {
+				email: req.params.email
+			}
+		})){
+			return res.send({
+				exists: true
+			});
+		}
+		else{
+			return res.status(404).send({
+				exists: false
+			});
+		}
+	}
+	catch(error){
+		console.log('Error:', error);
+		return res.status(500).send({
+			error
+		});
+	}
+});
+
 // Create a new user
 router.post('/', imageUpload.single('profpic'), async (req, res) => {
+	
 	if (typeof req.body.user !== 'object'){
 		req.body.user = JSON.parse(req.body.user);
 	}
@@ -173,16 +229,28 @@ router.post('/', imageUpload.single('profpic'), async (req, res) => {
 	const transaction = await sequelize.transaction();
 
 	try{
+		req.body.user.password = aesDecrypt(req.body.user.password, req.body.user.username);
+
 		//destructure the variables needed from req.body.user
-		const {username, firstname, lastname, email, hashedpassword, profpic} = req.body.user;
+		const {username, firstname, lastname, email, password, profpic} = req.body.user;
+
+		const hashedpassword = await bycrypt.hash(password, 8);
+
+		console.log({username, firstname, lastname, email, password, hashedpassword, profpic});
 
 		//create an instance in the user table and save the ID
-		const userId = await User.create({
+		const user = await User.create({
 			firstname,
 			lastname,
 			hashedpassword,
 			profpic,
-		}).get('id');
+		});
+		
+		console.log(user);
+
+		const userId = user.get('id');
+
+		console.log(userId);
 
 		//create an instance in the username table w fk to users
 		await UserName.create({
@@ -215,7 +283,7 @@ router.post('/', imageUpload.single('profpic'), async (req, res) => {
 });
 
 // Update a user's profile data
-router.patch('/:username', imageUpload.single('profpic'), async (req, res) => {
+router.patch('/', auth, imageUpload.single('profpic'), async (req, res) => {
 	if (typeof req.body.user !== 'object'){
 		req.body.user = JSON.parse(req.body.user);
 	}
@@ -289,48 +357,87 @@ router.patch('/:username', imageUpload.single('profpic'), async (req, res) => {
 });
 
 // Delete a user
-router.delete('/:username', async (req, res) => {
-	await fs.unlink(path.resolve('uploaded_media', 'user_profile_pics_large', req.params.username) + '.png', () => {});
-	await fs.unlink(path.resolve('uploaded_media', 'user_profile_pics_medium', req.params.username) + '.png', () => {});
-	await fs.unlink(path.resolve('uploaded_media', 'user_profile_pics_small', req.params.username) + '.png', () => {});
+router.delete('/', auth, async (req, res) => {
+	const id = req.body.id;
+	const username = req.body.username;
+	await fs.unlink(path.resolve('uploaded_media', 'user_profile_pics_large', username) + '.png', () => {});
+	await fs.unlink(path.resolve('uploaded_media', 'user_profile_pics_medium', username) + '.png', () => {});
+	await fs.unlink(path.resolve('uploaded_media', 'user_profile_pics_small', username) + '.png', () => {});
+
+	const transaction = await sequelize.transaction();
 
 	try{
-		//find a user by their username
-		const username = await UserName.findOne({
-			attributes: ['userid'],
+		await Block.destroy({
 			where: {
-				username: req.params.username
+				[Op.or]: {
+					blocker: id,
+					blockeduser: id
+				}
 			}
 		});
 
-		if (!username)
-			return res.status(404).send({
-				error: `Cannot find user '${req.params.username}'`
-			});
-		
-		const userId = username.get('userid');
+		await Follow.destroy({
+			where: {
+				[Op.or]: {
+					follower: id,
+					followeduser: id
+				}
+			}
+		});
+
+		await Reply.destroy({
+			where: {
+				userid: id
+			}
+		});
+
+		await Post.destroy({
+			where: {
+				userid: id
+			}
+		});
+
+		await LoginSession.destroy({
+			where: {
+				userid: id
+			}
+		});
+
+		await TrustedDevice.destroy({
+			where: {
+				userid: id
+			}
+		});
 
 		await UserEmail.destroy({
 			where: {
-				userid: userId
+				userid: id
 			}
 		});
+
 		await UserName.destroy({
 			where: {
-				userid: userId
+				userid: id
 			}
 		});
+
 		await User.destroy({
 			where: {
-				id: userId
+				id: id
 			}
 		});
-		return res.send({response: `User ${req.params.username} has been deleted.`});
+
+		transaction.commit();
+
+		return res.send({response: `User ${username} has been deleted.`});
 	}
 	catch (error) {
+
+		transaction.rollback();
+
 		return res.status(500).send({
 			error,
-			response: `User ${req.params.username} could not be deleted.`
+			response: `User ${username} could not be deleted.`
 		});
 	}
 });

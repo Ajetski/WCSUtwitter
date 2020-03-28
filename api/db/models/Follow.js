@@ -8,13 +8,11 @@ const Follow = sequelize.define('follow', {
 	follower: {
 		primaryKey: true,
 		type: INTEGER,
-		autoIncrement: true,
 		allowNull: false
 	},
 	followeduser: {
 		primaryKey: true,
 		type: INTEGER,
-		autoIncrement: true,
 		allowNull: false
 	}
 }, {
