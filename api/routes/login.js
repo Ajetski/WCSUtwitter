@@ -19,14 +19,12 @@ const router = express.Router();
 
 // Get a user's profile data
 router.post('/', async (req, res) => {
-	//req.body.username
-	//req.body.password
 
 	const transaction = await sequelize.transaction();
 
 	try{
 		req.body.password = aesDecrypt(req.body.password, req.body.username);
-		
+
 		const username = await UserName.findOne({
 			where: {
 				username: req.body.username
