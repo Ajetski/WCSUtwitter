@@ -3,6 +3,7 @@ const imageUpload = require('../util/image-upload');
 const { User, UserName, UserEmail, Reply, Block, Follow, Post, TrustedDevice, LoginSession } = require('../db/models');
 const sequelize = require('../db/sequelize');
 const auth = require('../middleware/auth');
+const { aesDecrypt } = require('../util/encryption');
 
 //core modules
 const path = require('path');
@@ -228,6 +229,8 @@ router.post('/', imageUpload.single('profpic'), async (req, res) => {
 	const transaction = await sequelize.transaction();
 
 	try{
+		req.body.user.password = aesDecrypt(req.body.user.password, req.body.user.username);
+
 		//destructure the variables needed from req.body.user
 		const {username, firstname, lastname, email, password, profpic} = req.body.user;
 
