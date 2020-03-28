@@ -12,7 +12,7 @@ import {
 } from 'antd';
 //import bcrypt from 'bcryptjs';
 
-import {reqSingup} from '../../axios/index'
+import {reqSingup, reqUserIsExist, reqEmailIsExist} from '../../axios/index'
 import memoryUtils from '../../utils/memoryUtils'
 import storageUtils from '../../utils/storageUtils'
 import aesUtils from '../../utils/aesUtils'
@@ -29,6 +29,14 @@ function readAgreementInfo() {
     ),
     onOk() {},
   });
+}
+
+async function userIsExist(username) {
+  return await reqUserIsExist(username);
+}
+
+async function emailIsExist(email) {
+  return await reqEmailIsExist(email);
 }
 
 class RegistrationForm extends React.Component {
@@ -93,6 +101,16 @@ class RegistrationForm extends React.Component {
       callback('User name cannot be longer than 12 characters!')
     } else if (!/^[a-zA-Z0-9_]+$/.test(value)) {
       callback('User name must be letters, numbers, or underscores!')
+    } else if(!userIsExist(value)){
+      callback('Username already exists!')
+    } else {
+      callback()
+    }
+  }
+
+  validateEmail = (rule, value, callback)  => {
+    if (emailIsExist(value)) {
+      callback('This email is already registered!')
     } else {
       callback()
     }
@@ -173,6 +191,7 @@ class RegistrationForm extends React.Component {
         </Form.Item>
         <Form.Item label="Confirm Password" hasFeedback>
           {getFieldDecorator('confirm', {
+            validateFirst: true,
             rules: [
               {
                 validator: this.validatePassword
@@ -185,6 +204,7 @@ class RegistrationForm extends React.Component {
         </Form.Item>
         <Form.Item label="E-mail">
           {getFieldDecorator('email', {
+            validateFirst: true,
             rules: [
               {
                 type: 'email',
@@ -193,6 +213,9 @@ class RegistrationForm extends React.Component {
               {
                 required: true,
                 message: 'Please input your E-mail!',
+              },
+              {
+                validator: this.validateEmail
               },
             ],
           })(<Input />)}

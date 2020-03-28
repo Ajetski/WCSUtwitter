@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {message} from 'antd'
+//import {message} from 'antd'
 
 export default function ajax(url, data={}, type='GET') {
 
@@ -19,7 +19,7 @@ export default function ajax(url, data={}, type='GET') {
     promise.then(response => {
       resolve(response)
     }).catch(error => {
-      message.error('error: ' + error.message)
+      //message.error('error: ' + error.message)
     })
   })
 }
