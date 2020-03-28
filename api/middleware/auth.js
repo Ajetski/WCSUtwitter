@@ -33,6 +33,7 @@ const auth = async (req, res, next) => {
 
 		req.body.id = decoded.id;
 		req.body.username = username;
+		req.body.jwt = token;
 
 		next();
 	}
