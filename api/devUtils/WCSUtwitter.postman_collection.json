@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "70546367-6138-41fa-8a30-872ba44104dd",
+		"_postman_id": "4fbc92f6-1a71-4a4e-9ac8-a07433cf6a41",
 		"name": "WCSUtwitter",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -381,6 +381,15 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"blockedUser\":\"Ajet2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{url}}/api/block",
 							"host": [
@@ -399,6 +408,15 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"unblockUser\": \"Ajet2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{url}}/api/block",
 							"host": [
@@ -541,15 +559,20 @@
 	],
 	"variable": [
 		{
-			"id": "56dc2592-c911-43e9-a931-d85322f9c9eb",
+			"id": "72fba558-0ba7-4aaf-867c-620edf60f4f9",
 			"key": "url",
 			"value": "localhost:8080",
 			"type": "string"
 		},
 		{
-			"id": "9d6b3ce4-0f15-44eb-8198-7abef788bb3f",
+			"id": "fd173ddf-a7cf-4fa1-b16f-79d2627b5ce3",
 			"key": "jwt",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTg1NDQzNTYwLCJleHAiOjE1ODU2MTYzNjB9.BfohTLSNmzMrYkqsnIpbZ8EhM10KfLnieHXB_6XsdYs",
+			"type": "string"
+		},
+		{
+			"id": "6e595189-8d53-4d3d-810a-46b4ca500b39",
+			"value": "",
 			"type": "string"
 		}
 	],
