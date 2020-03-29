@@ -17,13 +17,12 @@ class LoginForm extends React.Component {
         values.password = aesUtils.aesEncrypt(values.password, values.username)
         const {username, password} = values
         const result = await reqLogin(username, password)
-        console.log("result:"+result)
-        if (result.status===0) {
+
+        if (result.status===201) {
           message.success('login successful!')
 
-          const user = result.data
-          memoryUtils.user = user
-          storageUtils.saveUser(user)
+          memoryUtils.user = username
+          storageUtils.saveUser(username)
 
           this.props.history.replace('/home')
         } else {
