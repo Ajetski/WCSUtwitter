@@ -23,6 +23,19 @@ router.post('/', async (req, res) => {
 	const transaction = await sequelize.transaction();
 
 	try{
+
+		if(!req.body.username) {
+			return res.status(404).send({
+				error: 'No username provided.'
+			});
+		}
+
+		if(!req.body.password) {
+			return res.status(404).send({
+				error: 'No password provided.'
+			});
+		}
+
 		req.body.password = aesDecrypt(req.body.password, req.body.username);
 
 		const username = await UserName.findOne({
@@ -31,7 +44,7 @@ router.post('/', async (req, res) => {
 			}
 		});
 		if (!username)
-			return res.status(404).send({error: `User ${req.params.username} not found.`});
+			return res.status(404).send({error: `User '${req.body.username}' not found.`});
 			
 		const userId = username.get('userid');
 

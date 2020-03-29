@@ -144,20 +144,8 @@
 							}
 						],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "user",
-									"value": "{\n    \"username\": \"Ajet\",\n    \"password\": \"9de5f094a6c3beb830b8d283beee7bc3\",\n    \"email\": \"jeniski001@wcsu.edu\",\n    \"firstname\": \"Adam\",\n    \"lastname\": \"Jeniski\"\n}",
-									"type": "text"
-								},
-								{
-									"key": "",
-									"value": "",
-									"type": "text",
-									"disabled": true
-								}
-							],
+							"mode": "raw",
+							"raw": "{\r\n\t\"user\": {\r\n\t    \"username\": \"Ajet2\",\r\n\t    \"password\": \"99153109f9f114481dc6c530ddde78a6\",\r\n\t    \"email\": \"jeniski002@wcsu.edu\",\r\n\t    \"firstname\": \"Adam\",\r\n\t    \"lastname\": \"Jeniski\"\r\n\t}\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -285,7 +273,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/users/Ajet/1",
+							"raw": "{{url}}/api/users/Ajet/0",
 							"host": [
 								"{{url}}"
 							],
@@ -293,7 +281,7 @@
 								"api",
 								"users",
 								"Ajet",
-								"1"
+								"0"
 							]
 						}
 					},
@@ -342,6 +330,177 @@
 				}
 			],
 			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Logout",
+			"item": [
+				{
+					"name": "Logout",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/logout",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Block",
+			"item": [
+				{
+					"name": "Blocked Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/block",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"block"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Block User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/block",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"block"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unblock User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/block",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"block"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Follow",
+			"item": [
+				{
+					"name": "Followed Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/follow",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"follow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Followers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/followers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"followers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Follow",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"followUser\": \"Ajet2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/follow",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"follow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unfollow",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/follow",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"follow"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"auth": {
@@ -349,7 +508,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTg1Mzc2MzE4LCJleHAiOjE1ODU1NDkxMTh9.1frFsdZxHLF1o_Lh3xxwQsCc8MTi1O5_Hs1jWXqiiEE",
+				"value": "{{jwt}}",
 				"type": "string"
 			}
 		]
@@ -371,16 +530,26 @@
 				"id": "2684426a-8554-432a-8f5b-2d31b58d100b",
 				"type": "text/javascript",
 				"exec": [
-					""
+					"const jsonData = JSON.parse(responseBody);",
+					"console.log(jsonData);",
+					"if(jsonData.jwt){",
+					"    postman.setEnvironmentVariable(\"jwt\", jsonData.jwt);",
+					"}"
 				]
 			}
 		}
 	],
 	"variable": [
 		{
-			"id": "34a49f08-4a0f-4434-89d0-1a1e21b969c1",
+			"id": "56dc2592-c911-43e9-a931-d85322f9c9eb",
 			"key": "url",
 			"value": "localhost:8080",
+			"type": "string"
+		},
+		{
+			"id": "9d6b3ce4-0f15-44eb-8198-7abef788bb3f",
+			"key": "jwt",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTg1NDQzNTYwLCJleHAiOjE1ODU2MTYzNjB9.BfohTLSNmzMrYkqsnIpbZ8EhM10KfLnieHXB_6XsdYs",
 			"type": "string"
 		}
 	],
