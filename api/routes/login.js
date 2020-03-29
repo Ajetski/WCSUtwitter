@@ -57,7 +57,7 @@ router.post('/', async (req, res) => {
 
 		const passIsCorrect = await bcrypt.compare(req.body.password, userHashedPassword);
 		if(!passIsCorrect){
-			res.status(400).send({
+			return res.status(400).send({
 				error: 'Incorrect username or password.'
 			});
 		}
