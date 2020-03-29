@@ -2,24 +2,22 @@ import React from 'react';
 import { Redirect } from 'react-router-dom'
 import './login.less';
 import { Form, Icon, Input, Button, message } from 'antd';
-//import bcrypt from 'bcryptjs';
 
 import { reqLogin } from '../../axios/index'
 import memoryUtils from '../../utils/memoryUtils'
 import storageUtils from '../../utils/storageUtils'
 import aesUtils from '../../utils/aesUtils'
 
-//const saltRounds = 10;
 class LoginForm extends React.Component {
   handleSubmit = e => {
     e.preventDefault()
 
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        //values.password = await bcrypt.hash(values.password, saltRounds)
         values.password = aesUtils.aesEncrypt(values.password, values.username)
         const {username, password} = values
         const result = await reqLogin(username, password)
+        console.log("result:"+result)
         if (result.status===0) {
           message.success('login successful!')
 
